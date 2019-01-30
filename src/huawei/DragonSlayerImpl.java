@@ -1,7 +1,7 @@
 package huawei;
 
 import huawei.exam.*;
-
+import java.util.ArrayList;
 /**
  * 实现类
  * 
@@ -9,7 +9,7 @@ import huawei.exam.*;
  */
 public class DragonSlayerImpl implements ExamOp
 {
-    /**
+	/**
      * ReturnCode(返回码枚举) .S001：重置成功 .S002：设置火焰成功 .S003：设置龙卷风成功 .S004：设置传送阵成功 .E001：非法命令
      * .E002：非法坐标 .E003：非法时间 .E004：操作时间不能小于系统时间 .E005：该区域不能设置元素 .E006：龙卷风数量已达上限
      * .E007：传送阵数量已达上限 .E008：传送阵的入口和出口重叠
@@ -43,8 +43,37 @@ public class DragonSlayerImpl implements ExamOp
     /**
      * 待考生实现，构造函数
      */
+	private Map map;
+	private int sys_time=0;
+	private boolean isTurnadoSet;
+	private boolean isPortalSet;
+	private Hero hero;
+	private int[][] path_sequence=new int[100][3];
+
+	
+	public void FindPath(){
+		Map temp_map=this.map;
+	}
+	
+	public void updateHero(int time){
+		
+	}
+	
+    public void update(int time)
+    {
+    	FindPath();
+    	updateHero(time);//update title and state
+    }
+
     public DragonSlayerImpl()
     {
+    	this.map=new Map();
+    	this.sys_time=0;
+    	this.isPortalSet=false;
+    	this.isTurnadoSet=false;
+    	this.hero=new Hero();
+    	this.isTurnadoSet=false;
+    	this.isPortalSet=false;
     }
     
     /**
@@ -55,7 +84,14 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult reset()
     {
-        return new OpResult(ReturnCode.E001);
+    	this.map=new Map();
+    	this.sys_time=0;
+    	this.isPortalSet=false;
+    	this.isTurnadoSet=false;
+    	this.hero=new Hero();
+    	this.isTurnadoSet=false;
+    	this.isPortalSet=false;
+       	return new OpResult(ReturnCode.S001);        
     }
     
     /**
@@ -67,9 +103,31 @@ public class DragonSlayerImpl implements ExamOp
      */
     @Override
     public OpResult setFire(Area area, int time)
-    {
-        return new OpResult(ReturnCode.E001);
+    {    	
+    	if(sys_time<=time)
+    	{
+    		if(sys_time<time){
+    			update(time);
+    		}
+    		int x=area.getX();
+        	int y=area.getY();
+        	char flag=isCollision(x,y);
+    		if(flag==1)
+    		{
+    			this.map.setMap(x, y, MyElement.FIRE);
+    			return new OpResult(ReturnCode.S002);
+    		}else if(flag==2){
+    			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
+    			return new OpResult(ReturnCode.S002);
+    		}else{
+    			return new OpResult(ReturnCode.E005);
+    		}
+    	}else{
+    		return new OpResult(ReturnCode.E004);
+    	}
+    	return new OpResult(ReturnCode.E001);
     }
+    
     
     /**
      * 待考生实现，设置龙卷风
@@ -80,7 +138,34 @@ public class DragonSlayerImpl implements ExamOp
      */
     @Override
     public OpResult setTornado(Area area, int time)
-    {
+    {	
+    	if(sys_time<=time)
+    	{
+    		update();
+    		int x=area.getX();
+        	int y=area.getY();
+        	char flag=isCollision(x,y);
+    		if(flag==0)
+    		{
+    			return new OpResult(ReturnCode.E005);
+    			
+    		}else{
+    			if(this.isTurnadoSet){
+    				return new OpResult(ReturnCode.E006);
+    			}else{
+    				if(flag==1)
+    	    		{
+    	    			this.map.setMap(x, y, MyElement.FIRE);
+    	    		}else if(flag==2){
+    	    			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
+    	    		}
+    				this.isTurnadoSet=true;
+	    			return new OpResult(ReturnCode.S002);
+    			}
+    		}
+    	}else{
+    		return new OpResult(ReturnCode.E004);
+    	}
         return new OpResult(ReturnCode.E001);
     }
     
@@ -95,6 +180,33 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setPortal(Area entry, Area exit, int time)
     {
+    	if(sys_time<=time)
+    	{
+    		update();
+        	int entry_x=entry.getX();
+        	int entry_y=entry.getY();
+        	int exit_x=exit.getX();
+        	int exit_y=exit.getY();
+        	char flag=isCollision(entry_x,entry_y,exit_x,exit_y);
+    		if(flag==0)
+    		{
+    			return new OpResult(ReturnCode.E005);    			
+    		}else{
+    			if(this.isPortalSet){
+    				return new OpResult(ReturnCode.E007);
+    			}else{
+    				if(flag==3){
+    					return new OpResult(ReturnCode.E008);
+    				}else{
+        	    		this.map.setMap(entry_x, entry_y, MyElement.PORTAL_ENTRANCE);
+        	    		this.map.setMap(exit_x, exit_y, MyElement.PORTAL_EXIT);
+    	    			return new OpResult(ReturnCode.S002);
+    				}
+    			}
+    		}
+    	}else{
+    		return new OpResult(ReturnCode.E004);
+    	}
         return new OpResult(ReturnCode.E001);
     }
     
@@ -108,5 +220,36 @@ public class DragonSlayerImpl implements ExamOp
     public OpResult query(int time)
     {
         return new OpResult(ReturnCode.E001);
+    }
+    
+    public char isCollision(int x,int y)
+    {
+    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:OTHERS
+    	if(this.map.table[x][y].element==MyElement.NONE)
+    	{
+    		flag=1;
+    	}else if(this.map.table[x][y].element==MyElement.PORTAL_EXIT){
+    		flag=2;
+    	}else{
+    		flag=0;
+    	}
+    	return flag;
+    }
+    
+    public char isCollision(int entry_x,int entry_y,int exit_x, int exit_y){
+    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:entry is the same as exit 0:OTHERS
+    	if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE))
+    	{
+    		flag=1;
+    	}else if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.PORTAL_EXIT)){
+    		flag=2;
+    	}else if((this.map.table[entry_x][entry_y].element==MyElement.PORTAL_EXIT)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE)){
+    		flag=2;
+    	}else if((entry_x==exit_x)&&(entry_y==exit_y)){
+    		flag=3;
+    	}else{
+    		flag=0;
+    	}
+    	return flag;
     }
 }

@@ -3,12 +3,14 @@ package testcase;
 import org.junit.Test;
 
 /**
- * ²âÊÔÀà
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * ¿¼Éú¿ÉÑ¡ÔñĞÔÊµÏÖ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
  */
 public class DragonSlayerTest {
     @Test
     public void testCase001() {
+    	
+    	
     }
 }
