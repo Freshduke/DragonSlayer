@@ -49,10 +49,66 @@ public class DragonSlayerImpl implements ExamOp
 	private boolean isPortalSet;
 	private Hero hero;
 	private int[][] path_sequence=new int[100][3];
-
+	private static int[][] temp_map = new int[16][16];
 	
-	public void FindPath(){
-		Map temp_map=this.map;
+	
+	
+	public void ComparePath(){
+		
+		for(int i=0;i<16;i++) {
+			for(int j=0;j<16;j++) {
+
+				if(map.table[i][j].element == MyElement.FIRE) {
+					temp_map[i][j]=1;
+				}
+				else if(map.table[i][j].element == MyElement.TORNADO) {
+						temp_map[i][j]=1;
+				}
+				else if(map.table[i][j].element == MyElement.PORTAL_ENTRANCE) {
+					temp_map[i][j]=1;
+			    }
+				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
+					temp_map[i][j]=1;
+				}
+				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
+					temp_map[i][j]=1;	
+				}
+			}
+			
+			
+		}
+		//
+	}
+	
+	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
+		//全局变量：int[16][16] temp_map记录着当前地图的信息：1代表不可经过，0代表可经过。
+		//调用示例：
+		/*if(temp_map[1][2] == 1) {
+		 blablabla;
+		}*/
+		
+		//输入：temp_map[depart_x,depart_y] 
+		//(depart_x,depart_y)是起点，
+		//temp_map[destin_x,destin_y]
+		//(destin_x,destin_y)是终点
+		
+		
+		
+		//返回的变量
+		int[][] path_seq = new int[100][2];   //自动初始化的数值就是0，直接序列从上往下写就行
+/* 第一列	第二列 返回值举例（第一列横坐标，第二列纵坐标）   
+		1   1
+		2   2
+		3   3
+		4   4
+		5   5
+		0   0
+		......
+		0   0
+		*/
+		//#######################################################################向萌施展才华的地方
+		
+		 return path_seq;
 	}
 	
 	public void updateHero(int time){
@@ -61,7 +117,7 @@ public class DragonSlayerImpl implements ExamOp
 	
     public void update(int time)
     {
-    	FindPath();
+    	ComparePath();
     	updateHero(time);//update title and state
     }
 
@@ -104,9 +160,9 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setFire(Area area, int time)
     {    	
-    	if(sys_time<=time)
+    	if(sys_time>=time)
     	{
-    		if(sys_time<time){
+    		if(sys_time>time){
     			update(time);
     		}
     		int x=area.getX();
@@ -122,10 +178,11 @@ public class DragonSlayerImpl implements ExamOp
     		}else{
     			return new OpResult(ReturnCode.E005);
     		}
-    	}else{
+    	}
+    	else{
     		return new OpResult(ReturnCode.E004);
     	}
-    	return new OpResult(ReturnCode.E001);
+    	 //  return new OpResult(ReturnCode.E001);
     }
     
     
@@ -139,9 +196,11 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setTornado(Area area, int time)
     {	
-    	if(sys_time<=time)
+    	if(sys_time>=time)
     	{
-    		update();
+    		if(sys_time>time){
+    			update(time);
+    		}
     		int x=area.getX();
         	int y=area.getY();
         	char flag=isCollision(x,y);
@@ -166,7 +225,7 @@ public class DragonSlayerImpl implements ExamOp
     	}else{
     		return new OpResult(ReturnCode.E004);
     	}
-        return new OpResult(ReturnCode.E001);
+    	 //  return new OpResult(ReturnCode.E001);
     }
     
     /**
@@ -180,9 +239,11 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setPortal(Area entry, Area exit, int time)
     {
-    	if(sys_time<=time)
+    	if(sys_time>=time)
     	{
-    		update();
+    		if(sys_time>time){
+    			update(time);
+    		}
         	int entry_x=entry.getX();
         	int entry_y=entry.getY();
         	int exit_x=exit.getX();
@@ -207,7 +268,7 @@ public class DragonSlayerImpl implements ExamOp
     	}else{
     		return new OpResult(ReturnCode.E004);
     	}
-        return new OpResult(ReturnCode.E001);
+      //  return new OpResult(ReturnCode.E001);
     }
     
     /**

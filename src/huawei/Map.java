@@ -1,15 +1,15 @@
 package huawei;
 
 public class Map {
-	Square[][] table=new Square[15][15];
+	Square[][] table=new Square[16][16];
 
 	
 	public Map()
 	{
 		int i,j;
-		for(i=0;i<15;i++)
+		for(i=0;i<16;i++)
 		{
-			for(j=0;j<15;j++)
+			for(j=0;j<16;j++)
 			{
 				
 				this.table[i][j]=new Square(MyElement.NONE,0);
