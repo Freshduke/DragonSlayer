@@ -43,43 +43,192 @@ public class DragonSlayerImpl implements ExamOp
     /**
      * 待考生实现，构造函数
      */
-	private Map map;
+	private static Map map;
 	private int sys_time=0;
 	private boolean isTurnadoSet;
 	private boolean isPortalSet;
 	private Hero hero;
-	private int[][] path_sequence=new int[100][3];
+	private int[][] path_sequence=new int[100][2];
+	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
 	
 	
-	
+	// 比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
+		int[][] p_no_portal = new int[100][2];          //不经过传送门的最优路径
+		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
+		int[][] p_portal_entran = new int[100][2];      //以传送门入口为终点的最优路径
+		int length_p_portal_entran=50;                  //以传送门入口为终点的最优路径的序列长度
+		int[][] p_portal_exit = new int[100][2];        //以传送门出口为起点的最优路径
+		int length_p_portal_exit=100;                   //以传送门出口为起点的最优路径的序列长度
+		int portal_entrance_x=0;
+		int portal_entrance_y=0;
+		int portal_exit_x=20;
+		int portal_exit_y=20;
+		int FIRE_PORTAL_EXIT_x=20;
+		int FIRE_PORTAL_EXIT_y=20;
+		
+	    // 不经过传送门可以经过龙卷风的最优路径。
+		p_no_portal = p_cmp_tornado(hero.getX(), hero.getY() , 15 , 15 ,1);
+		length_p_no_portal = detech_sequence_length(p_no_portal);
+		
+		//判断地图中有无传送门，若没有传送门（出口值不更新）or 传送门出口处有火焰则无需计算经过传送门的最优路径。
+		for(int i = 0; i< 16;i++)
+		{
+			for(int j =0 ;j < 16;j++) 
+			{
+				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT||map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT)	
+				{
+					portal_exit_x = i;
+					portal_exit_y = j;
+					break;
+				}
+			}
+		}
+		for(int i = 0; i< 16;i++)
+		{
+			for(int j =0 ;j < 16;j++) 
+			{
+				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT)			
+				{
+					FIRE_PORTAL_EXIT_x = i;
+					FIRE_PORTAL_EXIT_y = j;
+					break;
+				}
+			}
+		}
+		if((FIRE_PORTAL_EXIT_x !=20 && FIRE_PORTAL_EXIT_y !=20)||(portal_exit_x ==20 && portal_exit_y ==20))
+		{
+			path_sequence =p_no_portal;
+		}
+		
+		else 
+		{
+			//计算经过传送门的最优路径
+			for(int i = 0; i< 16;i++)
+			{
+				for(int j =0 ;j < 16;j++)
+				{
+					if(map.table[i][j].element == MyElement.PORTAL_ENTRANCE)
+					{
+						portal_entrance_x = i;
+						portal_entrance_y = j;
+						break;
+					}
+				}
+			}
+
+			p_portal_entran = p_cmp_tornado(hero.getX(), hero.getY() , portal_entrance_x , portal_entrance_y , 0);
+			
+			p_portal_exit   = p_cmp_tornado(portal_exit_x,portal_exit_y ,15 , 15 , 1);
+			
+			length_p_portal_entran = detech_sequence_length(p_portal_entran);
+			length_p_portal_exit   = detech_sequence_length(p_portal_exit);
+			if((length_p_portal_exit+length_p_portal_entran) > length_p_no_portal)
+			{
+				path_sequence =p_no_portal;
+			}
+			else 
+			{
+				int k=0;
+				for(int i=1; i< 100; i++) {
+					if(p_portal_entran[i][1] != 0)
+					{
+						p_portal_entran[i][1] = p_portal_exit[k][1];
+						p_portal_entran[i][2] = p_portal_exit[k][2];
+						k++;
+					}
+				}
+				path_sequence =p_portal_entran;
+			}
+		}
+	}
+	
+	
+	// 对比经过或不经过龙卷风下的最优路径长度，返回最优路径序列
+	public static int[][] p_cmp_tornado(int depart_x,int depart_y,int destin_x, int destin_y,int status_portal_entran){
+		int[][] p_tornado_access = new int[100][2];
+		int[][] p_tornado_inaccess = new int[100][2];
+		int length_p_tornado_access=0;
+		int length_p_tornado_inaccess=0;
+		int tornado_x=0;
+		int tornado_y=0;
 		
 		for(int i=0;i<16;i++) {
 			for(int j=0;j<16;j++) {
-
 				if(map.table[i][j].element == MyElement.FIRE) {
 					temp_map[i][j]=1;
 				}
-				else if(map.table[i][j].element == MyElement.TORNADO) {
-						temp_map[i][j]=1;
-				}
 				else if(map.table[i][j].element == MyElement.PORTAL_ENTRANCE) {
-					temp_map[i][j]=1;
+					temp_map[i][j]=status_portal_entran;
 			    }
 				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
-					temp_map[i][j]=1;
+					temp_map[i][j]=0;
 				}
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
 					temp_map[i][j]=1;	
+				}	
+				else if(map.table[i][j].element == MyElement.TORNADO) {
+					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
 				}
 			}
-			
-			
-		}
-		//
+		 }
+		 p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y);
+		 for(int i=0; i<100;i++) {
+			if(p_tornado_access[i][1] == tornado_x && p_tornado_access[i][2] == tornado_y) {
+				for (int j = 100; j>i; j--) {
+					p_tornado_access[j][1]=p_tornado_access[j-1][1];
+					p_tornado_access[j][2]=p_tornado_access[j-1][2];
+				}
+				for (int j = 100; j>i+1; j--) {
+					p_tornado_access[j][1]=p_tornado_access[j-1][1];
+					p_tornado_access[j][2]=p_tornado_access[j-1][2];
+				}
+				p_tornado_access[i][1]=tornado_x;
+				p_tornado_access[i][2]=tornado_y;
+				p_tornado_access[i+1][1]=tornado_x;
+				p_tornado_access[i+1][2]=tornado_y;
+			}
+		 }
+		 length_p_tornado_access = detech_sequence_length(p_tornado_access);
+		
+		 
+		 for(int i=0;i<16;i++) {
+			for(int j=0;j<16;j++) {
+				if(map.table[i][j].element == MyElement.TORNADO) {
+					temp_map[i][j]=1;
+				}
+				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
+					temp_map[i][j]=1;
+				}
+			}
+		 }		
+		 p_tornado_inaccess = findpath(depart_x,depart_y,destin_x,destin_y);
+		 length_p_tornado_inaccess =detech_sequence_length(p_tornado_inaccess) ;
+		 if(length_p_tornado_access > length_p_tornado_inaccess ) {
+		 	p_tornado_access = p_tornado_inaccess;
+		 }
+		
+		 return p_tornado_access;
 	}
 	
+	
+	
+	//检测最优路径序列长度，返回长度
+	public static int detech_sequence_length(int[][] array) {
+		int k;
+		for(k =0; k<100;k++) {
+			if(array[k][1]== 0) {
+				return k;
+			}
+		}
+		return 100;
+	}
+	
+	
+	//给定地图起点&起点&终点&返回最优路径序列
 	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
 		//全局变量：int[16][16] temp_map记录着当前地图的信息：1代表不可经过，0代表可经过。
 		//调用示例：
@@ -111,15 +260,61 @@ public class DragonSlayerImpl implements ExamOp
 		 return path_seq;
 	}
 	
+	
+	
+	//更新英雄称号&行进状态
 	public void updateHero(int time){
-		
+		for(int i =0; i<100;i++) {
+			if(path_sequence_with_time[i][3]==time) {
+				hero.setX(path_sequence_with_time[i][1]);
+				hero.setY(path_sequence_with_time[i][2]);
+				hero.March();
+				sys_time = time;
+			}
+		}
+		if(hero.getX() == 15 && hero.getY()==15)
+		{
+			hero.changeTitle();
+		}
 	}
 	
+	//更新系统时间&英雄位置&称号&行进状态总函数。
     public void update(int time)
     {
     	ComparePath();
-    	updateHero(time);//update title and state
+    	
+    	int non_zero_row_index=0;;
+    	
+		int column3_cnt = sys_time;			
+	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
+			hero.Wait();
+			sys_time = time;
+		}
+	    else
+	    {
+			for(int i=0;i<2;i++) {
+				path_sequence_with_time[1][i] = path_sequence[1][i];
+			}		
+			for(int i =1;i<100;i++){
+				if(path_sequence[i][1]!=0) {
+					path_sequence_with_time[i][1] = path_sequence[i][1];
+					path_sequence_with_time[i][2] = path_sequence[i][2];
+					path_sequence_with_time[i][3] = column3_cnt;
+					column3_cnt++;
+					non_zero_row_index = i;
+				}
+				else
+				{
+					path_sequence_with_time[i][1] = path_sequence[non_zero_row_index][1];
+					path_sequence_with_time[i][2] = path_sequence[non_zero_row_index][2];
+					path_sequence_with_time[i][3] = column3_cnt;
+					column3_cnt++;
+				}
+			}
+	    	updateHero(time);//update title and state
+	    }
     }
+
 
     public DragonSlayerImpl()
     {

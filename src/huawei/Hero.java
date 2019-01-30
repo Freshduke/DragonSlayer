@@ -40,5 +40,10 @@ public class Hero {
 	public Title getTitle(){
 		return this.title;
 	}
-
+	public void setX(int pos_x) {
+		this.x = pos_x;
+	}
+	public void setY(int pos_y) {
+		this.y = pos_y;
+	}
 }
