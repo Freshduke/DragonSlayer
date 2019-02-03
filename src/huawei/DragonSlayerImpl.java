@@ -266,8 +266,8 @@ public class DragonSlayerImpl implements ExamOp
 	public void updateHero(int time){
 		for(int i =0; i<100;i++) {
 			if(path_sequence_with_time[i][3]==time) {
-				hero.setX(path_sequence_with_time[i][1]);
-				hero.setY(path_sequence_with_time[i][2]);
+				hero.setX(path_sequence_with_time[i][0]);
+				hero.setY(path_sequence_with_time[i][1]);
 				hero.March();
 				sys_time = time;
 			}
@@ -286,7 +286,7 @@ public class DragonSlayerImpl implements ExamOp
     	int non_zero_row_index=0;;
     	
 		int column3_cnt = sys_time;			
-	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
+	    if(path_sequence[1][0]==0 && path_sequence[1][1]==0) {
 			hero.Wait();
 			sys_time = time;
 		}
@@ -297,17 +297,17 @@ public class DragonSlayerImpl implements ExamOp
 			}		
 			for(int i =1;i<100;i++){
 				if(path_sequence[i][1]!=0) {
+					path_sequence_with_time[i][0] = path_sequence[i][0];
 					path_sequence_with_time[i][1] = path_sequence[i][1];
-					path_sequence_with_time[i][2] = path_sequence[i][2];
-					path_sequence_with_time[i][3] = column3_cnt;
+					path_sequence_with_time[i][2] = column3_cnt;
 					column3_cnt++;
 					non_zero_row_index = i;
 				}
 				else
 				{
+					path_sequence_with_time[i][0] = path_sequence[non_zero_row_index][0];
 					path_sequence_with_time[i][1] = path_sequence[non_zero_row_index][1];
-					path_sequence_with_time[i][2] = path_sequence[non_zero_row_index][2];
-					path_sequence_with_time[i][3] = column3_cnt;
+					path_sequence_with_time[i][2] = column3_cnt;
 					column3_cnt++;
 				}
 			}
