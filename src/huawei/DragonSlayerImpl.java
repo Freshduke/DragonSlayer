@@ -283,7 +283,7 @@ public class DragonSlayerImpl implements ExamOp
     {
     	ComparePath();
     	
-    	int non_zero_row_index=0;;
+    	int non_zero_row_index=0;
     	
 		int column3_cnt = sys_time;			
 	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
@@ -322,7 +322,7 @@ public class DragonSlayerImpl implements ExamOp
     	this.sys_time=0;
     	this.isPortalSet=false;
     	this.isTurnadoSet=false;
-    	this.hero=new Hero();
+    	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
     	this.isTurnadoSet=false;
     	this.isPortalSet=false;
     }
@@ -339,7 +339,7 @@ public class DragonSlayerImpl implements ExamOp
     	this.sys_time=0;
     	this.isPortalSet=false;
     	this.isTurnadoSet=false;
-    	this.hero=new Hero();
+    	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
     	this.isTurnadoSet=false;
     	this.isPortalSet=false;
        	return new OpResult(ReturnCode.S001);        
@@ -475,7 +475,15 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult query(int time)
     {
-        return new OpResult(ReturnCode.E001);
+        if(time>=this.sys_time)
+    	{
+    		if(time>this.sys_time){
+        		update(time);
+        	}
+    		return new OpResult(this.hero);
+    	}else{
+    		return new OpResult(ReturnCode.E004);	
+    	}
     }
     
     public char isCollision(int x,int y)
