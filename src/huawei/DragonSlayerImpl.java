@@ -286,7 +286,7 @@ public class DragonSlayerImpl implements ExamOp
     	int non_zero_row_index=0;;
     	
 		int column3_cnt = sys_time;			
-	    if(path_sequence[1][0]==0 && path_sequence[1][1]==0) {
+	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
 			hero.Wait();
 			sys_time = time;
 		}
