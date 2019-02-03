@@ -17,7 +17,7 @@ public class Map {
 		}
 		
 		this.table[0][0].setElement(MyElement.HERO);
-		this.table[14][14].setElement(MyElement.DRAGON);
+		this.table[15][15].setElement(MyElement.DRAGON);
 	}
 	
 	public void setMap(int x, int y, MyElement e)
