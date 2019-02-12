@@ -51,7 +51,7 @@ public class DragonSlayerImpl implements ExamOp
 	private int[][] path_sequence=new int[100][2];
 	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
-	public int[] P = new int[2];
+
 
 
 	
