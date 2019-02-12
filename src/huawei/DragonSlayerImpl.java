@@ -53,9 +53,11 @@ public class DragonSlayerImpl implements ExamOp
 	private static int[][] temp_map = new int[16][16];
     private static ArrayList<ArrayEdge> G4 = new ArrayList<>();
 	private static ArrayList<ArrayEdge> G = new ArrayList<>();
+	private static ArrayList<Ans> paths = new ArrayList<>();
+	private static int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
+	private static boolean[] vis = new boolean[256];
 
-	
-	// 比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
+			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
 		int[][] p_no_portal = new int[100][2];          //不经过传送门的最优路径
 		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
@@ -242,7 +244,9 @@ public class DragonSlayerImpl implements ExamOp
 		//(depart_x,depart_y)是起点，
 		//temp_map[destin_x,destin_y]
 		//(destin_x,destin_y)是终点
-		
+		for(int i = 0; i<256; i++){
+			vis[i] = false;
+		}
 		//返回的变量
 		int[][] path_seq = new int[100][2];   //自动初始化的数值就是0，直接序列从上往下写就行
 /* 第一列	第二列 返回值举例（第一列横坐标，第二列纵坐标）   
@@ -258,7 +262,7 @@ public class DragonSlayerImpl implements ExamOp
 		//#######################################################################向萌施展才华的地方
 
 		//建立邻接矩阵Gmat
-		int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
+
 
 		for(int i=1;i<15;i++)
 			for(int j=1;j<15;j++)
@@ -274,9 +278,60 @@ public class DragonSlayerImpl implements ExamOp
 					Gmat[j][i]=999;
 				}
 			}
-		dijkstra(1,G);
+		for (int i = 0; i<256;i++)
+		{
+			for(int j=0; j<256; j++)
+			{
+				if(Gmat[i][j] == 1) {
+					Edge G_element = new Edge(i,1);
+					G.get(i).addelement(G_element);
+					G_element.change_Edge(j,1);
+					G.get(j).addelement(G_element);
+				}
+			}
+		}
 
-		 return path_seq;
+		dijkstra(1,G);
+		ArrayList<Ans> paths = new ArrayList<>();
+		Ans ans = new Ans();
+		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, paths, depart_x*16+depart_y);
+		if(paths.size()==1)
+		{
+			int NodeNum=0;
+			for(int j=0; j<paths.get(0).path.size(); j++)  //只有一条是，paths仅有一条路径，即仅有一行元素，故取paths[0]
+			{
+				path_seq[NodeNum][0] = paths.get(0).path.get(j) / 16 ;
+				path_seq[NodeNum][1] = paths.get(0).path.get(j) % 16 ;
+				NodeNum++;
+			}
+		}
+
+
+		return path_seq;
+	}
+
+
+	public void dfs(int s, int t, Ans A, ArrayList<Ans> paths, int start)
+	{
+		if (s == t)
+		{
+			A.start = start;
+			A.getCost(Gmat);
+			paths.add(A);
+		}
+
+		for (int i = 0; i < G4.get(s).size(); i++)
+		{
+			int u = G.get(s).getelement(i).to;
+			if (!vis[u])
+			{
+				vis[u] = true;
+				A.path.add(u);
+				dfs(u, t, A, paths, start);
+				A.path.remove(0);
+				vis[u] = false;
+			}
+		}
 	}
 
 	public static void dijkstra(int s, ArrayList<ArrayEdge> G)
@@ -324,8 +379,6 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 	}
-
-
 
 	
 	//更新英雄称号&行进状态
@@ -443,7 +496,7 @@ public class DragonSlayerImpl implements ExamOp
     	else{
     		return new OpResult(ReturnCode.E004);
     	}
-    	 //  return new OpResult(ReturnCode.E001);
+    	 // return new OpResult(ReturnCode.E001);
     }
     
     
@@ -486,7 +539,7 @@ public class DragonSlayerImpl implements ExamOp
     	}else{
     		return new OpResult(ReturnCode.E004);
     	}
-    	 //  return new OpResult(ReturnCode.E001);
+    	 // return new OpResult(ReturnCode.E001);
     }
     
     /**
