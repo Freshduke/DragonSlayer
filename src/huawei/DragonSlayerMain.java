@@ -107,9 +107,10 @@ public class DragonSlayerMain
                 	label[i][j].setBackground (Color.GRAY);
                 }else if(map.table[i][j].element==MyElement.FIRE_PORTAL_EXIT){
                 	label[i][j].setBackground (Color.magenta);
-                }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT){
-                	label[i][j].setBackground (Color.LIGHT_GRAY);
-                map_draw.add (label[i][j]);
+                }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT) {
+					label[i][j].setBackground(Color.LIGHT_GRAY);
+				}
+                	map_draw.add (label[i][j]);
               }
         }
         jframe.add (map_draw, BorderLayout.CENTER);
