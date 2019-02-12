@@ -1,7 +1,5 @@
 package huawei;
 
-package huawei;
-
 import huawei.exam.Area;
 import huawei.exam.ExamCmd;
 
@@ -65,6 +63,8 @@ public class DragonSlayerMain
     			int t;
     			t=Integer.valueOf(parts[1]);
     			test_map.query(t);
+    		}else if(parts[0].matches("r")){
+    			test_map.reset();
     		}
     		drawMap(test_map.map);
     	}
@@ -107,9 +107,7 @@ public class DragonSlayerMain
                 	label[i][j].setBackground (Color.magenta);
                 }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT){
                 	label[i][j].setBackground (Color.LIGHT_GRAY);
-                }else if(parts[0].matches("r")){
-    			test_map.reset();
-    		}
+                }
                 map_draw.add (label[i][j]);
             }
         }
