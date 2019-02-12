@@ -44,7 +44,7 @@ public class DragonSlayerImpl implements ExamOp
      * 待考生实现，构造函数
      */
 	private static Map map;
-	private int sys_time=0;
+	private int sys_time;
 	private boolean isTurnadoSet;
 	private boolean isPortalSet;
 	private Hero hero;
@@ -349,7 +349,7 @@ public class DragonSlayerImpl implements ExamOp
     {
     	ComparePath();
     	
-    	int non_zero_row_index = 0;;
+    	int non_zero_row_index = 0;
     	
 		int column3_cnt = sys_time;			
 	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
