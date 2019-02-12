@@ -37,6 +37,4 @@ public class PriorityQueue {
         return this.priority_queue.size();
     }
 
-
-
 }

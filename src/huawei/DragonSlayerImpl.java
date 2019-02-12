@@ -71,6 +71,13 @@ public class DragonSlayerImpl implements ExamOp
 		int portal_exit_y=20;
 		int FIRE_PORTAL_EXIT_x=20;
 		int FIRE_PORTAL_EXIT_y=20;
+
+
+		for(int i=0 ; i<101; i++)
+		{
+			path_sequence[i][0] = 999;
+			path_sequence[i][1] = 999;
+		}
 		
 	    // 不经过传送门可以经过龙卷风的最优路径。
 		p_no_portal = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , 15 , 15 ,1);
@@ -136,7 +143,7 @@ public class DragonSlayerImpl implements ExamOp
 			{
 				int k=0;
 				for(int i=1; i< 100; i++) {
-					if(p_portal_entran[i][1] != 0)
+					if(p_portal_entran[i][1] == 999) ///###########################################!!!!!!!
 					{
 						p_portal_entran[i][1] = p_portal_exit[k][1];
 						p_portal_entran[i][2] = p_portal_exit[k][2];
@@ -168,6 +175,8 @@ public class DragonSlayerImpl implements ExamOp
 			    }
 				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
 					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
 				}
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
 					temp_map[i][j]=1;	
@@ -181,19 +190,19 @@ public class DragonSlayerImpl implements ExamOp
 		 }
 		 p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y);
 		 for(int i=0; i<100;i++) {
-			if(p_tornado_access[i][1] == tornado_x && p_tornado_access[i][2] == tornado_y) {
+			if(p_tornado_access[i][0] == tornado_x && p_tornado_access[i][1] == tornado_y) {
 				for (int j = 100; j>i; j--) {
+					p_tornado_access[j][0]=p_tornado_access[j-1][0];
 					p_tornado_access[j][1]=p_tornado_access[j-1][1];
-					p_tornado_access[j][2]=p_tornado_access[j-1][2];
 				}
 				for (int j = 100; j>i+1; j--) {
+					p_tornado_access[j][0]=p_tornado_access[j-1][0];
 					p_tornado_access[j][1]=p_tornado_access[j-1][1];
-					p_tornado_access[j][2]=p_tornado_access[j-1][2];
 				}
-				p_tornado_access[i][1]=tornado_x;
-				p_tornado_access[i][2]=tornado_y;
-				p_tornado_access[i+1][1]=tornado_x;
-				p_tornado_access[i+1][2]=tornado_y;
+				p_tornado_access[i][0]=tornado_x;
+				p_tornado_access[i][1]=tornado_y;
+				p_tornado_access[i+1][0]=tornado_x;
+				p_tornado_access[i+1][1]=tornado_y;
 			}
 		 }
 		 length_p_tornado_access = detech_sequence_length(p_tornado_access);
@@ -224,7 +233,7 @@ public class DragonSlayerImpl implements ExamOp
 	public static int detech_sequence_length(int[][] array) {
 		int k;
 		for(k =0; k<100;k++) {
-			if(array[k][1]== 0) {
+			if(array[k][1]== 999 && array[k][0]== 999) {  //###############################################################!!!!!
 				return k;
 			}
 		}
@@ -263,29 +272,116 @@ public class DragonSlayerImpl implements ExamOp
 
 		//建立邻接矩阵Gmat
 
+//##############################################################################!!!!!
+		for(int i=0;i<256;i++)
+			for(int j=i;j<256;j++)
+			{
+				Gmat[i][j]=999;
+				Gmat[j][i]=999;
+			}
 
-		for(int i=1;i<15;i++)
+
+		for(int i=1;i<15;i+=3)
+		{
+			if (i==13) i=11;
 			for(int j=1;j<15;j++)
 			{
-				if(temp_map[i-1][j-1]==0||temp_map[i-1][j]==0||temp_map[i-1][j+1]==0||temp_map[i][j-1]==0||temp_map[i][j+1]==0||temp_map[i+1][j-1]==0||temp_map[i+1][j]==0||temp_map[i+1][j+1]==0)
-				{
-					Gmat[i][j]=1;
-					Gmat[j][i]=1;
-				}
-				else
-				{
-					Gmat[i][j]=999;
-					Gmat[j][i]=999;
+				if(temp_map[i][j]==0) {
+					if (temp_map[i - 1][j - 1] == 0) {
+						Gmat[(i - 1) * 16 + j - 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i - 1) * 16 + j - 1] = 1;
+					}
+					;
+					if (temp_map[i - 1][j] == 0) {
+						Gmat[(i - 1) * 16 + j][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i - 1) * 16 + j] = 1;
+					}
+					;
+					if (temp_map[i - 1][j + 1] == 0) {
+						Gmat[(i - 1) * 16 + j + 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i - 1) * 16 + j + 1] = 1;
+					}
+					;
+					if (temp_map[i][j - 1] == 0) {
+						Gmat[(i) * 16 + j - 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][i * 16 + j - 1] = 1;
+					}
+					;
+					if (temp_map[i][j + 1] == 0) {
+						Gmat[i * 16 + j + 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][i * 16 + j + 1] = 1;
+					}
+					;
+					if (temp_map[i + 1][j - 1] == 0) {
+						Gmat[(i + 1) * 16 + j - 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i + 1) * 16 + j - 1] = 1;
+					}
+					;
+					if (temp_map[i + 1][j] == 0) {
+						Gmat[(i + 1) * 16 + j][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i + 1) * 16 + j] = 1;
+					}
+					;
+					if (temp_map[i + 1][j + 1] == 0) {
+						Gmat[(i + 1) * 16 + j + 1][i * 16 + j] = 1;
+						Gmat[i * 16 + j][(i + 1) * 16 + j + 1] = 1;
+					}
 				}
 			}
+		}
+		for(int i = 1;i< 16;i++)
+		{
+			if(temp_map[0][i] == 0 && temp_map[0][i-1] == 0 )
+			{
+				Gmat[i-1][i] = 1;
+				Gmat[i][i-1]  = 1;
+			}
+
+			if(temp_map[15][i] == 0 && temp_map[15][i-1] == 0 )
+			{
+				Gmat[15*16+i][15*16+i-1] = 1;
+				Gmat[15*16+i-1][15*16+i] = 1;
+			}
+
+			if(temp_map[i][0] == 0 && temp_map[i-1][0] == 0)
+			{
+				Gmat[i*15][15*(i-1)] = 1;
+				Gmat[15*(i-1)][15*i] = 1;
+			}
+
+			if(temp_map[i][15] == 0 && temp_map[i-1][15] == 0)
+			{
+				Gmat[i*15+15][15*(i-1)+15] = 1;
+				Gmat[15*(i-1)+15][15*i+15] = 1;
+			}
+		}
+
+		for(int i = 1;i< 15;i++)
+		{
+			if(temp_map[i-1][i] == 0)
+			{
+				Gmat[(i-1)*16][i*16] = 1;
+				Gmat[i*16][(i-1)*16]  = 1;
+			}
+			else if(temp_map[i][i+1] == 0)
+			{
+				Gmat[i*16][(i+1)*16] = 1;
+				Gmat[(i+1)*16][i*16] = 1;
+			}
+		}
+
+
+
+
+		//##############################################################################!!!!!
 		for (int i = 0; i<256;i++)
 		{
 			for(int j=0; j<256; j++)
 			{
 				if(Gmat[i][j] == 1) {
-					Edge G_element = new Edge(i,1);
+					Edge G_element = new Edge(j,1);
 					G.get(i).addelement(G_element);
-					G_element.change_Edge(j,1);
+					G_element.change_Edge(i,1);
 					G.get(j).addelement(G_element);
 				}
 			}
@@ -297,7 +393,9 @@ public class DragonSlayerImpl implements ExamOp
 		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, paths, depart_x*16+depart_y);
 		if(paths.size()==1)
 		{
-			int NodeNum=0;
+			int NodeNum=1;
+			path_seq[0][0] = depart_x;
+			path_seq[0][1] = depart_y;
 			for(int j=0; j<paths.get(0).path.size(); j++)  //只有一条是，paths仅有一条路径，即仅有一行元素，故取paths[0]
 			{
 				path_seq[NodeNum][0] = paths.get(0).path.get(j) / 16 ;
@@ -305,7 +403,6 @@ public class DragonSlayerImpl implements ExamOp
 				NodeNum++;
 			}
 		}
-
 
 		return path_seq;
 	}
@@ -377,6 +474,9 @@ public class DragonSlayerImpl implements ExamOp
 					G4.get(v).addelement(e);
 				}
 			}
+			if(q.length() == 0){
+				condition_if = false;
+			}
 		}
 	}
 
@@ -384,8 +484,8 @@ public class DragonSlayerImpl implements ExamOp
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
 		for(int i =0; i<100;i++) {
-			if(path_sequence_with_time[i][3]==time) {
-				hero.setArea(new Area(path_sequence_with_time[i][1],path_sequence_with_time[i][2]));
+			if(path_sequence_with_time[i][2]==time) {
+				hero.setArea(new Area(path_sequence_with_time[i][0],path_sequence_with_time[i][1]));
 				hero.setStatus(Status.MARCHING);
 				sys_time = time;
 			}
@@ -404,17 +504,18 @@ public class DragonSlayerImpl implements ExamOp
     	int non_zero_row_index=0;
     	
 		int column3_cnt = sys_time;			
-	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
+	    if(path_sequence[1][0]==hero.getArea().getX() && path_sequence[1][1]==hero.getArea().getX()){
 	    	hero.setStatus(Status.WAITING);
 			sys_time = time;
 		}
 	    else
 	    {
+			hero.setStatus(Status.MARCHING);
 			for(int i=0;i<2;i++) {
-				path_sequence_with_time[1][i] = path_sequence[1][i];
-			}		
+				path_sequence_with_time[0][i] = path_sequence[0][i];
+			}
 			for(int i =1;i<100;i++){
-				if(path_sequence[i][1]!=0) {
+				if(path_sequence[i][1]!=999) {  //########################################################！！！！
 					path_sequence_with_time[i][0] = path_sequence[i][0];
 					path_sequence_with_time[i][1] = path_sequence[i][1];
 					path_sequence_with_time[i][2] = column3_cnt;

@@ -1,7 +1,7 @@
 package huawei;
 import java.util.*;
 
-public class P {
+public class P{
     int first;
     int second;
     public void P(){
