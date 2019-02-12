@@ -272,6 +272,7 @@ public class DragonSlayerImpl implements ExamOp
 
 		//建立邻接矩阵Gmat
 
+
 //##############################################################################!!!!!
 		for(int i=0;i<256;i++)
 			for(int j=i;j<256;j++)
