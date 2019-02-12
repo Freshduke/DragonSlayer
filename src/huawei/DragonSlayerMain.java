@@ -17,7 +17,7 @@ import com.huawei.exam.ExamSocketServer;
 
 /**
  * 主执行类
- * 
+ *
  * 考生不得修改，亦无须关注
  */
 public class DragonSlayerMain
@@ -63,10 +63,12 @@ public class DragonSlayerMain
     			int t;
     			t=Integer.valueOf(parts[1]);
     			test_map.query(t);
+    		}else if(parts[0].matches("r")){
+    			test_map.reset();
     		}
     		drawMap(test_map.map);
     	}
-    	
+
     }
 
 
@@ -107,11 +109,8 @@ public class DragonSlayerMain
                 	label[i][j].setBackground (Color.magenta);
                 }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT){
                 	label[i][j].setBackground (Color.LIGHT_GRAY);
-                }/*else if(parts[0].matches("r")) {
-                    test_map.reset();
-                }*/
                 map_draw.add (label[i][j]);
-            }
+              }
         }
         jframe.add (map_draw, BorderLayout.CENTER);
         jframe.setBounds (10, 10, 650, 650);
