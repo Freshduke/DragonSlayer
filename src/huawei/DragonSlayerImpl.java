@@ -69,7 +69,7 @@ public class DragonSlayerImpl implements ExamOp
 		int FIRE_PORTAL_EXIT_y=20;
 		
 	    // 不经过传送门可以经过龙卷风的最优路径。
-		p_no_portal = p_cmp_tornado(hero.getX(), hero.getY() , 15 , 15 ,1);
+		p_no_portal = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , 15 , 15 ,1);
 		length_p_no_portal = detech_sequence_length(p_no_portal);
 		
 		//判断地图中有无传送门，若没有传送门（出口值不更新）or 传送门出口处有火焰则无需计算经过传送门的最优路径。
@@ -118,7 +118,7 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 
-			p_portal_entran = p_cmp_tornado(hero.getX(), hero.getY() , portal_entrance_x , portal_entrance_y , 0);
+			p_portal_entran = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , portal_entrance_x , portal_entrance_y , 0);
 			
 			p_portal_exit   = p_cmp_tornado(portal_exit_x,portal_exit_y ,15 , 15 , 1);
 			
@@ -266,15 +266,14 @@ public class DragonSlayerImpl implements ExamOp
 	public void updateHero(int time){
 		for(int i =0; i<100;i++) {
 			if(path_sequence_with_time[i][3]==time) {
-				hero.setX(path_sequence_with_time[i][1]);
-				hero.setY(path_sequence_with_time[i][2]);
-				hero.March();
+				hero.setArea(new Area(path_sequence_with_time[i][1],path_sequence_with_time[i][2]));
+				hero.setStatus(Status.MARCHING);
 				sys_time = time;
 			}
 		}
-		if(hero.getX() == 15 && hero.getY()==15)
+		if(hero.getArea().getX() == 15 && hero.getArea().getY()==15)
 		{
-			hero.changeTitle();
+			hero.setTitle(Title.DRAGON_SLAYER);
 		}
 	}
 	
@@ -287,7 +286,7 @@ public class DragonSlayerImpl implements ExamOp
     	
 		int column3_cnt = sys_time;			
 	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
-			hero.Wait();
+	    	hero.setStatus(Status.WAITING);
 			sys_time = time;
 		}
 	    else
@@ -297,17 +296,17 @@ public class DragonSlayerImpl implements ExamOp
 			}		
 			for(int i =1;i<100;i++){
 				if(path_sequence[i][1]!=0) {
+					path_sequence_with_time[i][0] = path_sequence[i][0];
 					path_sequence_with_time[i][1] = path_sequence[i][1];
-					path_sequence_with_time[i][2] = path_sequence[i][2];
-					path_sequence_with_time[i][3] = column3_cnt;
+					path_sequence_with_time[i][2] = column3_cnt;
 					column3_cnt++;
 					non_zero_row_index = i;
 				}
 				else
 				{
+					path_sequence_with_time[i][0] = path_sequence[non_zero_row_index][0];
 					path_sequence_with_time[i][1] = path_sequence[non_zero_row_index][1];
-					path_sequence_with_time[i][2] = path_sequence[non_zero_row_index][2];
-					path_sequence_with_time[i][3] = column3_cnt;
+					path_sequence_with_time[i][2] = column3_cnt;
 					column3_cnt++;
 				}
 			}
@@ -355,9 +354,9 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setFire(Area area, int time)
     {    	
-    	if(sys_time>=time)
+    	if(sys_time<=time)
     	{
-    		if(sys_time>time){
+    		if(sys_time<time){
     			update(time);
     		}
     		int x=area.getX();
@@ -366,15 +365,19 @@ public class DragonSlayerImpl implements ExamOp
     		if(flag==1)
     		{
     			this.map.setMap(x, y, MyElement.FIRE);
+				System.out.println("Fire set at ("+x+","+y+")");
     			return new OpResult(ReturnCode.S002);
     		}else if(flag==2){
     			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
+				System.out.println("Fire set at ("+x+","+y+")");
     			return new OpResult(ReturnCode.S002);
     		}else{
+				System.out.println("Collision! SF failed!");
     			return new OpResult(ReturnCode.E005);
     		}
     	}
     	else{
+			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
     	 //  return new OpResult(ReturnCode.E001);
@@ -391,9 +394,9 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setTornado(Area area, int time)
     {	
-    	if(sys_time>=time)
+    	if(sys_time<=time)
     	{
-    		if(sys_time>time){
+    		if(sys_time<time){
     			update(time);
     		}
     		int x=area.getX();
@@ -401,10 +404,12 @@ public class DragonSlayerImpl implements ExamOp
         	char flag=isCollision(x,y);
     		if(flag==0)
     		{
+				System.out.println("ERROR:Collision! ST failed!");
     			return new OpResult(ReturnCode.E005);
     			
     		}else{
     			if(this.isTurnadoSet){
+					System.out.println("ERROR:Turnado has been set before!");
     				return new OpResult(ReturnCode.E006);
     			}else{
     				if(flag==1)
@@ -413,11 +418,13 @@ public class DragonSlayerImpl implements ExamOp
     	    		}else if(flag==2){
     	    			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
     	    		}
+					System.out.println("Turnado set at ("+x+","+y+")");
     				this.isTurnadoSet=true;
 	    			return new OpResult(ReturnCode.S002);
     			}
     		}
     	}else{
+			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
     	 //  return new OpResult(ReturnCode.E001);
@@ -434,9 +441,9 @@ public class DragonSlayerImpl implements ExamOp
     @Override
     public OpResult setPortal(Area entry, Area exit, int time)
     {
-    	if(sys_time>=time)
+    	if(sys_time<=time)
     	{
-    		if(sys_time>time){
+    		if(sys_time<time){
     			update(time);
     		}
         	int entry_x=entry.getX();
@@ -446,21 +453,27 @@ public class DragonSlayerImpl implements ExamOp
         	char flag=isCollision(entry_x,entry_y,exit_x,exit_y);
     		if(flag==0)
     		{
+				System.out.println("ERROR:Collision! SP failed!");
     			return new OpResult(ReturnCode.E005);    			
     		}else{
     			if(this.isPortalSet){
+					System.out.println("ERROR:Portal has been set before!");
     				return new OpResult(ReturnCode.E007);
     			}else{
     				if(flag==3){
+						System.out.println("ERROR:The entrance should be different to the exit!");
     					return new OpResult(ReturnCode.E008);
     				}else{
         	    		this.map.setMap(entry_x, entry_y, MyElement.PORTAL_ENTRANCE);
         	    		this.map.setMap(exit_x, exit_y, MyElement.PORTAL_EXIT);
+						System.out.println("Portal_entry set at ("+entry_x+","+entry_y+")");
+        	    		System.out.println("Portal_exit set at ("+exit_x+","+exit_y+")");
     	    			return new OpResult(ReturnCode.S002);
     				}
     			}
     		}
     	}else{
+			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
       //  return new OpResult(ReturnCode.E001);
@@ -480,8 +493,10 @@ public class DragonSlayerImpl implements ExamOp
     		if(time>this.sys_time){
         		update(time);
         	}
+			System.out.println(this.hero.getTitle()+" "+this.hero.getStatus()+" at("+this.hero.getArea().getX()+","+this.hero.getArea().getY()+")");
     		return new OpResult(this.hero);
     	}else{
+			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);	
     	}
     }
