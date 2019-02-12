@@ -1,7 +1,7 @@
 package huawei;
-
+import java.util.*;
 import huawei.exam.*;
-import java.util.ArrayList;
+
 /**
  * 实现类
  * 
@@ -51,7 +51,9 @@ public class DragonSlayerImpl implements ExamOp
 	private int[][] path_sequence=new int[100][2];
 	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
-	
+	public int[] P = new int[2];
+
+
 	
 	// 比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
@@ -241,8 +243,6 @@ public class DragonSlayerImpl implements ExamOp
 		//temp_map[destin_x,destin_y]
 		//(destin_x,destin_y)是终点
 		
-		
-		
 		//返回的变量
 		int[][] path_seq = new int[100][2];   //自动初始化的数值就是0，直接序列从上往下写就行
 /* 第一列	第二列 返回值举例（第一列横坐标，第二列纵坐标）   
@@ -256,11 +256,66 @@ public class DragonSlayerImpl implements ExamOp
 		0   0
 		*/
 		//#######################################################################向萌施展才华的地方
-		
+
+		//建立邻接矩阵Gmat
+		int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
+
+		for(int i=1;i<15;i++)
+			for(int j=1;j<15;j++)
+			{
+				if(temp_map[i-1][j-1]==0||temp_map[i-1][j]==0||temp_map[i-1][j+1]==0||temp_map[i][j-1]==0||temp_map[i][j+1]==0||temp_map[i+1][j-1]==0||temp_map[i+1][j]==0||temp_map[i+1][j+1]==0)
+				{
+					Gmat[i][j]=1;
+					Gmat[j][i]=1;
+				}
+				else
+				{
+					Gmat[i][j]=999;
+					Gmat[j][i]=999;
+				}
+			}
+
+
 		 return path_seq;
 	}
-	
-	
+
+	void dijkstra(int s, ArrayList<Edge> G)
+	{
+		//Vector dist = new Vector();
+		int [] dist = new int[256];
+		for(int i = 0; i<256 ; i++)
+		{
+			dist[i] = 9999;
+		}
+		ArrayList<> q;
+
+		dist[s] = 0;
+		q.push(P(0, s));
+		while(!q.empty())
+		{
+			P p = q.top();   //从尚未使用的顶点中找到一个距离最小的顶点
+			q.pop();
+			int v = p.second;
+			if(dist[v] < p.first)
+				continue;
+			for(int i=0; i<G[v].size(); i++)
+			{
+				Edge &e = G[v][i];
+				int dis = dist[v] + e.cost;
+				if(dist[e.to] > dis)
+				{
+					dist[e.to] = dist[v] + e.cost;
+					q.push(P(dist[e.to], e.to));
+					G4[v].push_back(e);
+				}
+				else if(dist[e.to] == dis)
+				{
+					G4[v].push_back(e);
+				}
+			}
+		}
+	}
+
 	
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
@@ -283,7 +338,7 @@ public class DragonSlayerImpl implements ExamOp
     {
     	ComparePath();
     	
-    	int non_zero_row_index=0;;
+    	int non_zero_row_index = 0;;
     	
 		int column3_cnt = sys_time;			
 	    if(path_sequence[1][1]==0 && path_sequence[1][2]==0) {
