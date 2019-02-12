@@ -9,15 +9,16 @@ public class P {
         this.second = 9999;
     }
     public void setFirst(int value){
-        this,first = value;
+        this.first = value;
     }
     public void setSecond(int value){
-        this,second = value;
+        this.second = value;
     }
     public int getFirst(){
-        return this,first;
+        return this.first;
     }
     public int getSecond(){
-        return this,second;
+        return this.second;
     }
+
 }

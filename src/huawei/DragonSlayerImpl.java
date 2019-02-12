@@ -51,8 +51,8 @@ public class DragonSlayerImpl implements ExamOp
 	private int[][] path_sequence=new int[100][2];
 	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
-
-
+    private static ArrayList<ArrayEdge> G4 = new ArrayList<>();
+	private static ArrayList<ArrayEdge> G = new ArrayList<>();
 
 	
 	// 比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
@@ -274,47 +274,58 @@ public class DragonSlayerImpl implements ExamOp
 					Gmat[j][i]=999;
 				}
 			}
-
+		dijkstra(1,G);
 
 		 return path_seq;
 	}
 
-	void dijkstra(int s, ArrayList<Edge> G)
+	public static void dijkstra(int s, ArrayList<ArrayEdge> G)
 	{
 		//Vector dist = new Vector();
 		int [] dist = new int[256];
+		boolean condition_if = true;
 		for(int i = 0; i<256 ; i++)
 		{
 			dist[i] = 9999;
 		}
-		ArrayList<> q;
-
+		PriorityQueue q = new PriorityQueue();
 		dist[s] = 0;
-		q.push(P(0, s));
-		while(!q.empty())
+		P P_initial = new P();
+		P_initial.setFirst(0);
+		P_initial.setSecond(s);
+		q.insert(P_initial);
+		if(q.length() == 0){
+			condition_if = false;
+		}
+		while(condition_if)
 		{
-			P p = q.top();   //从尚未使用的顶点中找到一个距离最小的顶点
-			q.pop();
+			P p = q.gettop();   //从尚未使用的顶点中找到一个距离最小的顶点
+			q.removetop();
 			int v = p.second;
 			if(dist[v] < p.first)
 				continue;
-			for(int i=0; i<G[v].size(); i++)
+			for(int i=0; i<G.get(v).size(); i++)
 			{
-				Edge &e = G[v][i];
+				Edge e = G.get(v).getelement(i);
 				int dis = dist[v] + e.cost;
 				if(dist[e.to] > dis)
 				{
 					dist[e.to] = dist[v] + e.cost;
-					q.push(P(dist[e.to], e.to));
-					G4[v].push_back(e);
+					P P_insert = new P();
+					P_insert.setFirst(dist[e.to]);
+					P_insert.setSecond(e.to);
+					q.insert( P_insert );
+					G4.get(v).addelement(e);
 				}
 				else if(dist[e.to] == dis)
 				{
-					G4[v].push_back(e);
+					G4.get(v).addelement(e);
 				}
 			}
 		}
 	}
+
+
 
 	
 	//更新英雄称号&行进状态
