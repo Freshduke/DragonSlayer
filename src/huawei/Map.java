@@ -1,7 +1,7 @@
 package huawei;
 
 public class Map {
-	Square[][] table=new Square[16][16];
+	public Square[][] table=new Square[16][16];
 
 	
 	public Map()

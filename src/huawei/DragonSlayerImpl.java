@@ -43,7 +43,7 @@ public class DragonSlayerImpl implements ExamOp
     /**
      * 待考生实现，构造函数
      */
-	private static Map map;
+	public static Map map;
 	private int sys_time;
 	private boolean isTurnadoSet;
 	private boolean isPortalSet;
@@ -53,7 +53,7 @@ public class DragonSlayerImpl implements ExamOp
 	private static int[][] temp_map = new int[16][16];
     private static ArrayList<ArrayEdge> G4 = new ArrayList<>();
 	private static ArrayList<ArrayEdge> G = new ArrayList<>();
-	private static ArrayList<Ans> paths = new ArrayList<>();
+	private static ArrayList<Ans> paths = new ArrayList<Ans>();
 	private static int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
 	private static boolean[] vis = new boolean[256];
 
@@ -390,7 +390,7 @@ public class DragonSlayerImpl implements ExamOp
 		dijkstra(1,G);
 		ArrayList<Ans> paths = new ArrayList<>();
 		Ans ans = new Ans();
-		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, paths, depart_x*16+depart_y);
+		 dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, paths, depart_x*16+depart_y);
 		if(paths.size()==1)
 		{
 			int NodeNum=1;
@@ -408,7 +408,7 @@ public class DragonSlayerImpl implements ExamOp
 	}
 
 
-	public void dfs(int s, int t, Ans A, ArrayList<Ans> paths, int start)
+	public static void dfs(int s, int t, Ans A, ArrayList<Ans> paths, int start)
 	{
 		if (s == t)
 		{

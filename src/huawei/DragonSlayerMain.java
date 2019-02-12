@@ -1,7 +1,5 @@
 package huawei;
 
-package huawei;
-
 import huawei.exam.Area;
 import huawei.exam.ExamCmd;
 
@@ -24,17 +22,17 @@ import com.huawei.exam.ExamSocketServer;
  */
 public class DragonSlayerMain
 {
-    public static void main(String[] args)
-    {
-        /**
+    public static void main(String[] args) {
+        /*
          * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
          * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
-         
-        
+         */
+
         Command cmd = new ExamCmd(new DragonSlayerImpl());
         ExamSocketServer ess = new ExamSocketServer(cmd);
-        ess.start();*/
-    	
+        ess.start();
+    }
+    /*
     	Scanner scanner=new Scanner(System.in);
     	DragonSlayerImpl test_map=new DragonSlayerImpl();
     	String order="start";
@@ -117,5 +115,5 @@ public class DragonSlayerMain
         jframe.setBounds (10, 10, 650, 650);
         jframe.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         jframe.setVisible (true);
-    }
+    }*/
 }
