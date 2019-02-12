@@ -1,7 +1,7 @@
 package huawei;
-
+import java.util.*;
 import huawei.exam.*;
-import java.util.ArrayList;
+
 /**
  * 实现类
  * 
@@ -44,14 +44,16 @@ public class DragonSlayerImpl implements ExamOp
      * 待考生实现，构造函数
      */
 	private static Map map;
-	private int sys_time=0;
+	private int sys_time;
 	private boolean isTurnadoSet;
 	private boolean isPortalSet;
 	private Hero hero;
 	private int[][] path_sequence=new int[100][2];
 	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
-	
+    private static ArrayList<ArrayEdge> G4 = new ArrayList<>();
+	private static ArrayList<ArrayEdge> G = new ArrayList<>();
+
 	
 	// 比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
@@ -241,8 +243,6 @@ public class DragonSlayerImpl implements ExamOp
 		//temp_map[destin_x,destin_y]
 		//(destin_x,destin_y)是终点
 		
-		
-		
 		//返回的变量
 		int[][] path_seq = new int[100][2];   //自动初始化的数值就是0，直接序列从上往下写就行
 /* 第一列	第二列 返回值举例（第一列横坐标，第二列纵坐标）   
@@ -256,11 +256,77 @@ public class DragonSlayerImpl implements ExamOp
 		0   0
 		*/
 		//#######################################################################向萌施展才华的地方
-		
+
+		//建立邻接矩阵Gmat
+		int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
+
+		for(int i=1;i<15;i++)
+			for(int j=1;j<15;j++)
+			{
+				if(temp_map[i-1][j-1]==0||temp_map[i-1][j]==0||temp_map[i-1][j+1]==0||temp_map[i][j-1]==0||temp_map[i][j+1]==0||temp_map[i+1][j-1]==0||temp_map[i+1][j]==0||temp_map[i+1][j+1]==0)
+				{
+					Gmat[i][j]=1;
+					Gmat[j][i]=1;
+				}
+				else
+				{
+					Gmat[i][j]=999;
+					Gmat[j][i]=999;
+				}
+			}
+		dijkstra(1,G);
+
 		 return path_seq;
 	}
-	
-	
+
+	public static void dijkstra(int s, ArrayList<ArrayEdge> G)
+	{
+		//Vector dist = new Vector();
+		int [] dist = new int[256];
+		boolean condition_if = true;
+		for(int i = 0; i<256 ; i++)
+		{
+			dist[i] = 9999;
+		}
+		PriorityQueue q = new PriorityQueue();
+		dist[s] = 0;
+		P P_initial = new P();
+		P_initial.setFirst(0);
+		P_initial.setSecond(s);
+		q.insert(P_initial);
+		if(q.length() == 0){
+			condition_if = false;
+		}
+		while(condition_if)
+		{
+			P p = q.gettop();   //从尚未使用的顶点中找到一个距离最小的顶点
+			q.removetop();
+			int v = p.second;
+			if(dist[v] < p.first)
+				continue;
+			for(int i=0; i<G.get(v).size(); i++)
+			{
+				Edge e = G.get(v).getelement(i);
+				int dis = dist[v] + e.cost;
+				if(dist[e.to] > dis)
+				{
+					dist[e.to] = dist[v] + e.cost;
+					P P_insert = new P();
+					P_insert.setFirst(dist[e.to]);
+					P_insert.setSecond(e.to);
+					q.insert( P_insert );
+					G4.get(v).addelement(e);
+				}
+				else if(dist[e.to] == dis)
+				{
+					G4.get(v).addelement(e);
+				}
+			}
+		}
+	}
+
+
+
 	
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
