@@ -1,4 +1,5 @@
 package huawei;
+
 import java.util.*;
 
 public class Ans{
@@ -15,7 +16,10 @@ public class Ans{
     {
         this.cost = cost_number;
     }
-
+    public int getValue()
+    {
+        return this.start;
+    }
     public void getCost(int[][] G1)
     {
         this.cost = G1[this.start][this.path.get(0)];

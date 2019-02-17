@@ -51,11 +51,12 @@ public class DragonSlayerImpl implements ExamOp
 	private int[][] path_sequence=new int[100][2];
 	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
-    private static ArrayList<ArrayEdge> G4 = new ArrayList<>();
-	private static ArrayList<ArrayEdge> G = new ArrayList<>();
-	private static ArrayList<Ans> paths = new ArrayList<Ans>();
+	private static ArrayList<Edge> G4[] = new ArrayList[256];
+	private static ArrayList<Edge> G[] = new ArrayList[256];
 	private static int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
 	private static boolean[] vis = new boolean[256];
+	private static ArrayList<P> q = new ArrayList<>();
+	private static ArrayList<Ans> paths = new ArrayList<>();
 
 			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
@@ -110,7 +111,7 @@ public class DragonSlayerImpl implements ExamOp
 		}
 		if((FIRE_PORTAL_EXIT_x !=20 && FIRE_PORTAL_EXIT_y !=20)||(portal_exit_x ==20 && portal_exit_y ==20))
 		{
-			path_sequence =p_no_portal;
+			path_sequence = p_no_portal;
 		}
 		
 		else 
@@ -239,26 +240,34 @@ public class DragonSlayerImpl implements ExamOp
 		}
 		return 100;
 	}
-	
-	
-	//给定地图起点&起点&终点&返回最优路径序列
-	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
-		//全局变量：int[16][16] temp_map记录着当前地图的信息：1代表不可经过，0代表可经过。
-		//调用示例：
+
+
+	//缁欏畾鍦板浘璧风偣&璧风偣&缁堢偣&杩斿洖鏈�浼樿矾寰勫簭鍒�
+	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y) throws FileNotFoundException{
+
+
+		//鍏ㄥ眬鍙橀噺锛歩nt[16][16] temp_map璁板綍鐫�褰撳墠鍦板浘鐨勪俊鎭細1浠ｈ〃涓嶅彲缁忚繃锛�0浠ｈ〃鍙粡杩囥��
+		//璋冪敤绀轰緥锛�
 		/*if(temp_map[1][2] == 1) {
 		 blablabla;
 		}*/
-		
-		//输入：temp_map[depart_x,depart_y] 
-		//(depart_x,depart_y)是起点，
+
+		//杈撳叆锛歵emp_map[depart_x,depart_y]
+		//(depart_x,depart_y)鏄捣鐐癸紝
 		//temp_map[destin_x,destin_y]
-		//(destin_x,destin_y)是终点
+		//(destin_x,destin_y)鏄粓鐐�
 		for(int i = 0; i<256; i++){
 			vis[i] = false;
 		}
-		//返回的变量
-		int[][] path_seq = new int[100][2];   //自动初始化的数值就是0，直接序列从上往下写就行
-/* 第一列	第二列 返回值举例（第一列横坐标，第二列纵坐标）   
+		//杩斿洖鐨勫彉閲�
+		int[][] path_seq = new int[100][2];   //鑷姩鍒濆鍖栫殑鏁板�煎氨鏄�0锛岀洿鎺ュ簭鍒椾粠涓婂線涓嬪啓灏辫
+
+		for(int i= 0; i< 100 ; i++)
+		{
+			path_seq[i][0]=999;
+			path_seq[i][1]=999;
+		}
+/* 绗竴鍒�	绗簩鍒� 杩斿洖鍊间妇渚嬶紙绗竴鍒楁í鍧愭爣锛岀浜屽垪绾靛潗鏍囷級
 		1   1
 		2   2
 		3   3
@@ -268,136 +277,100 @@ public class DragonSlayerImpl implements ExamOp
 		......
 		0   0
 		*/
-		//#######################################################################向萌施展才华的地方
+		//#######################################################################鍚戣悓鏂藉睍鎵嶅崕鐨勫湴鏂�
+		//寤虹珛閭绘帴鐭╅樀Gmat
 
-		//建立邻接矩阵Gmat
-
-
-//##############################################################################!!!!!
 		for(int i=0;i<256;i++)
 			for(int j=i;j<256;j++)
 			{
-				Gmat[i][j]=999;
-				Gmat[j][i]=999;
+				Gmat[i][j]=9;
+				Gmat[j][i]=9;
 			}
 
 
-		for(int i=1;i<15;i+=3)
+		for(int i=0;i<16;i++)
 		{
-			if (i==13) i=11;
-			for(int j=1;j<15;j++)
+			for(int j=0;j<16;j++)
 			{
 				if(temp_map[i][j]==0) {
-					if (temp_map[i - 1][j - 1] == 0) {
-						Gmat[(i - 1) * 16 + j - 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i - 1) * 16 + j - 1] = 1;
+					if((i-1>=0)&&(j-1>=0)){
+						if (temp_map[i - 1][j - 1] == 0) {
+							Gmat[(i - 1) * 16 + j - 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i - 1) * 16 + j - 1] = 1;
+						}
 					}
-					;
-					if (temp_map[i - 1][j] == 0) {
-						Gmat[(i - 1) * 16 + j][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i - 1) * 16 + j] = 1;
+					if(i-1>=0){
+						if (temp_map[i - 1][j] == 0) {
+							Gmat[(i - 1) * 16 + j][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i - 1) * 16 + j] = 1;
+						}
 					}
-					;
-					if (temp_map[i - 1][j + 1] == 0) {
-						Gmat[(i - 1) * 16 + j + 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i - 1) * 16 + j + 1] = 1;
+					if((i-1>=0)&&(j+1<16)){
+						if (temp_map[i - 1][j + 1] == 0) {
+							Gmat[(i - 1) * 16 + j + 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i - 1) * 16 + j + 1] = 1;
+						}
 					}
-					;
-					if (temp_map[i][j - 1] == 0) {
-						Gmat[(i) * 16 + j - 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][i * 16 + j - 1] = 1;
+					if(j-1>=0){
+						if (temp_map[i][j - 1] == 0) {
+							Gmat[(i) * 16 + j - 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][i * 16 + j - 1] = 1;
+						}
 					}
-					;
-					if (temp_map[i][j + 1] == 0) {
-						Gmat[i * 16 + j + 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][i * 16 + j + 1] = 1;
+					if(j+1<16){
+						if (temp_map[i][j + 1] == 0) {
+							Gmat[i * 16 + j + 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][i * 16 + j + 1] = 1;
+						}
 					}
-					;
-					if (temp_map[i + 1][j - 1] == 0) {
-						Gmat[(i + 1) * 16 + j - 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i + 1) * 16 + j - 1] = 1;
+
+
+					if((i+1<16)&&(j-1>=0)){
+						if (temp_map[i + 1][j - 1] == 0) {
+							Gmat[(i + 1) * 16 + j - 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i + 1) * 16 + j - 1] = 1;
+						}
 					}
-					;
-					if (temp_map[i + 1][j] == 0) {
-						Gmat[(i + 1) * 16 + j][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i + 1) * 16 + j] = 1;
+					if(i+1<16){
+						if (temp_map[i + 1][j] == 0) {
+							Gmat[(i + 1) * 16 + j][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i + 1) * 16 + j] = 1;
+						}
 					}
-					;
-					if (temp_map[i + 1][j + 1] == 0) {
-						Gmat[(i + 1) * 16 + j + 1][i * 16 + j] = 1;
-						Gmat[i * 16 + j][(i + 1) * 16 + j + 1] = 1;
+					if((i+1<16)&&(j+1<16)){
+						if (temp_map[i + 1][j + 1] == 0) {
+							Gmat[(i + 1) * 16 + j + 1][i * 16 + j] = 1;
+							Gmat[i * 16 + j][(i + 1) * 16 + j + 1] = 1;
+						}
 					}
 				}
 			}
 		}
-		for(int i = 1;i< 16;i++)
-		{
-			if(temp_map[0][i] == 0 && temp_map[0][i-1] == 0 )
-			{
-				Gmat[i-1][i] = 1;
-				Gmat[i][i-1]  = 1;
-			}
-
-			if(temp_map[15][i] == 0 && temp_map[15][i-1] == 0 )
-			{
-				Gmat[15*16+i][15*16+i-1] = 1;
-				Gmat[15*16+i-1][15*16+i] = 1;
-			}
-
-			if(temp_map[i][0] == 0 && temp_map[i-1][0] == 0)
-			{
-				Gmat[i*15][15*(i-1)] = 1;
-				Gmat[15*(i-1)][15*i] = 1;
-			}
-
-			if(temp_map[i][15] == 0 && temp_map[i-1][15] == 0)
-			{
-				Gmat[i*15+15][15*(i-1)+15] = 1;
-				Gmat[15*(i-1)+15][15*i+15] = 1;
-			}
-		}
-
-		for(int i = 1;i< 15;i++)
-		{
-			if(temp_map[i-1][i] == 0)
-			{
-				Gmat[(i-1)*16][i*16] = 1;
-				Gmat[i*16][(i-1)*16]  = 1;
-			}
-			else if(temp_map[i][i+1] == 0)
-			{
-				Gmat[i*16][(i+1)*16] = 1;
-				Gmat[(i+1)*16][i*16] = 1;
-			}
-		}
 
 
 
-
-		//##############################################################################!!!!!
 		for (int i = 0; i<256;i++)
 		{
 			for(int j=0; j<256; j++)
 			{
 				if(Gmat[i][j] == 1) {
-					Edge G_element = new Edge(j,1);
-					G.get(i).addelement(G_element);
-					G_element.change_Edge(i,1);
-					G.get(j).addelement(G_element);
+					Edge G_element = new Edge(j, 1);
+					G[i].add(G_element);
 				}
 			}
 		}
 
-		dijkstra(1,G);
-		ArrayList<Ans> paths = new ArrayList<>();
+
+		dijkstra(0,G);
+
 		Ans ans = new Ans();
-		 dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, paths, depart_x*16+depart_y);
+		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, depart_x*16+depart_y);
 		if(paths.size()==1)
 		{
 			int NodeNum=1;
 			path_seq[0][0] = depart_x;
 			path_seq[0][1] = depart_y;
-			for(int j=0; j<paths.get(0).path.size(); j++)  //只有一条是，paths仅有一条路径，即仅有一行元素，故取paths[0]
+			for(int j=0; j<paths.get(0).path.size(); j++)  //鍙湁涓�鏉℃槸锛宲aths浠呮湁涓�鏉¤矾寰勶紝鍗充粎鏈変竴琛屽厓绱狅紝鏁呭彇paths[0]
 			{
 				path_seq[NodeNum][0] = paths.get(0).path.get(j) / 16 ;
 				path_seq[NodeNum][1] = paths.get(0).path.get(j) % 16 ;
@@ -409,31 +382,43 @@ public class DragonSlayerImpl implements ExamOp
 	}
 
 
-	public static void dfs(int s, int t, Ans A, ArrayList<Ans> paths, int start)
+	public static void dfs(int s, int t, Ans A,  int start)
 	{
 		if (s == t)
 		{
+			System.out.println("haha");
 			A.start = start;
 			A.getCost(Gmat);
-			paths.add(A);
+			Ans A2 = new Ans();
+			A2.setStart(A.getValue());
+			for (int i=0; i<A.path.size();i++)
+			{
+				A2.path.add(A.path.get(i));
+			}
+			A2.getCost(Gmat);
+			paths.add(A2);
 		}
 
-		for (int i = 0; i < G4.get(s).size(); i++)
+		for (int i = 0; i < G4[s].size(); i++)
 		{
-			int u = G.get(s).getelement(i).to;
+			int u = G4[s].get(i).to;
+
 			if (!vis[u])
 			{
 				vis[u] = true;
 				A.path.add(u);
-				dfs(u, t, A, paths, start);
-				A.path.remove(0);
+				dfs(u, t, A, start);
+				A.path.remove(A.path.size()-1);
 				vis[u] = false;
 			}
 		}
 	}
 
-	public static void dijkstra(int s, ArrayList<ArrayEdge> G)
+
+
+	public static void dijkstra(int s,ArrayList<Edge>[] G)
 	{
+
 		//Vector dist = new Vector();
 		int [] dist = new int[256];
 		boolean condition_if = true;
@@ -441,25 +426,27 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			dist[i] = 9999;
 		}
-		PriorityQueue q = new PriorityQueue();
+
 		dist[s] = 0;
 		P P_initial = new P();
 		P_initial.setFirst(0);
 		P_initial.setSecond(s);
-		q.insert(P_initial);
-		if(q.length() == 0){
+		q.add(P_initial);
+		sortingQueue();
+		if(q.size() == 0){
 			condition_if = false;
 		}
 		while(condition_if)
 		{
-			P p = q.gettop();   //从尚未使用的顶点中找到一个距离最小的顶点
-			q.removetop();
+			P p = q.get(0);   //浠庡皻鏈娇鐢ㄧ殑椤剁偣涓壘鍒颁竴涓窛绂绘渶灏忕殑椤剁偣
+			q.remove(0);
+			sortingQueue();
 			int v = p.second;
 			if(dist[v] < p.first)
 				continue;
-			for(int i=0; i<G.get(v).size(); i++)
+			for(int i=0; i<G[v].size(); i++)
 			{
-				Edge e = G.get(v).getelement(i);
+				Edge e = G[v].get(i);
 				int dis = dist[v] + e.cost;
 				if(dist[e.to] > dis)
 				{
@@ -467,21 +454,47 @@ public class DragonSlayerImpl implements ExamOp
 					P P_insert = new P();
 					P_insert.setFirst(dist[e.to]);
 					P_insert.setSecond(e.to);
-					q.insert( P_insert );
-					G4.get(v).addelement(e);
+					q.add( P_insert );
+					sortingQueue();
+					G4[v].add(e);
 				}
 				else if(dist[e.to] == dis)
 				{
-					G4.get(v).addelement(e);
+					G4[v].add(e);
 				}
 			}
-			if(q.length() == 0){
+			if(q.size() == 0){
 				condition_if = false;
 			}
 		}
 	}
 
-	
+	public static void sortingQueue() {
+		for (int i=0;i< q.size();i++ )
+		{
+			q.sort(new Comparator<P>(){
+
+				public int compare(P o1,P o2){
+					if(o1.getFirst()>o2.getFirst()){
+						return 1;
+					}
+					else if(o1.getFirst()==o2.getFirst()){
+						if(o1.getSecond()>o2.getSecond())
+							return 1;
+						else if(o1.getSecond()<o2.getSecond())
+							return -1;
+						else
+							return 0;
+					}
+					else if(o1.getFirst()<o2.getFirst()){
+						return -1;
+					}
+					return 0;
+				}
+			});
+		}
+	}
+
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
 		for(int i =0; i<100;i++) {
