@@ -17,29 +17,29 @@ import com.huawei.exam.ExamSocketServer;
 
 /**
  * 主执行类
- *
+ * 
  * 考生不得修改，亦无须关注
  */
 public class DragonSlayerMain
 {
-    public static void main(String[] args) {
-        /*
+    public static void main(String[] args)
+    {
+        /**
          * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
          * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
-
-
+         
+        
         Command cmd = new ExamCmd(new DragonSlayerImpl());
         ExamSocketServer ess = new ExamSocketServer(cmd);
-        ess.start();
-    }*/
-
+        ess.start();*/
+    	
     	Scanner scanner=new Scanner(System.in);
     	DragonSlayerImpl test_map=new DragonSlayerImpl();
     	String order="start";
     	while(order.matches("ends")==false){
     		order=scanner.nextLine();
-    		String[] parts=order.split(" ");   	//按空格分段
-    		if(parts[0].matches("sf")){         //
+    		String[] parts=order.split(" ");   		
+    		if(parts[0].matches("sf")){
     			int x,y,t;
     			x=Integer.valueOf(parts[1]);
     			y=Integer.valueOf(parts[2]);
@@ -68,17 +68,15 @@ public class DragonSlayerMain
     		}
     		drawMap(test_map.map);
     	}
-
+    	
     }
-
-
-
+    
     public static void drawMap(Map map){
-    	JFrame jframe=new JFrame();                                 //可视化窗口
-        GridLayout grid = new GridLayout (16, 16);     //grid layout 画网格，对话款
-        JPanel map_draw = new JPanel ();                            //对话框里的东西
-        map_draw.setLayout (grid);                                   //布局是网格
-        Label[][] label = new Label[16][16];                        // 每个网格装label
+    	JFrame jframe=new JFrame();
+        GridLayout grid = new GridLayout (16, 16);
+        JPanel map_draw = new JPanel ();
+        map_draw.setLayout (grid);
+        Label[][] label = new Label[16][16];
         for ( int i = 0; i < label.length; i++ )
         {
             for ( int j = 0; j < label[i].length; j++ )
@@ -107,11 +105,18 @@ public class DragonSlayerMain
                 	label[i][j].setBackground (Color.GRAY);
                 }else if(map.table[i][j].element==MyElement.FIRE_PORTAL_EXIT){
                 	label[i][j].setBackground (Color.magenta);
-                }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT) {
-					label[i][j].setBackground(Color.LIGHT_GRAY);
-				}
-                	map_draw.add (label[i][j]);
-              }
+                }else if(map.table[i][j].element==MyElement.TORNADO_PORTAL_EXIT){
+                	label[i][j].setBackground (Color.LIGHT_GRAY);
+                }
+                
+            }
+        }
+        for ( int i = 0; i < label.length; i++ )
+        {
+            for ( int j = 0; j < label[i].length; j++ )
+            {
+            	map_draw.add (label[15-i][j]);
+            }
         }
         jframe.add (map_draw, BorderLayout.CENTER);
         jframe.setBounds (10, 10, 650, 650);
