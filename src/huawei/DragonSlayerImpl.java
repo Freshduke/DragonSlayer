@@ -109,11 +109,12 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 		}
-		if((FIRE_PORTAL_EXIT_x !=20 && FIRE_PORTAL_EXIT_y !=20)||(portal_exit_x ==20 && portal_exit_y ==20))
-		{
+
+
+
+		if((FIRE_PORTAL_EXIT_x !=20 && FIRE_PORTAL_EXIT_y !=20)||(portal_exit_x ==20 && portal_exit_y ==20)) {
 			path_sequence = p_no_portal;
 		}
-		
 		else 
 		{
 			//计算经过传送门的最优路径
@@ -175,6 +176,16 @@ public class DragonSlayerImpl implements ExamOp
 					temp_map[i][j]=status_portal_entran;
 			    }
 				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
+					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
+				}
+				else if(map.table[i][j].element == MyElement.HERO_PORTAL_EXIT) {
+					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
+				}
+				else if(map.table[i][j].element == MyElement.PORTAL_EXIT) {
 					temp_map[i][j]=0;
 					tornado_x = i;
 					tornado_y = j;
