@@ -73,7 +73,7 @@ public class DragonSlayerImpl implements ExamOp
 		int FIRE_PORTAL_EXIT_y=20;
 
 
-		for(int i=0 ; i<101; i++)
+		for(int i=0 ; i<100; i++)
 		{
 			path_sequence[i][0] = 999;
 			path_sequence[i][1] = 999;
