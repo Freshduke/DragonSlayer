@@ -60,6 +60,11 @@ public class DragonSlayerImpl implements ExamOp
 
 			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
+		for(int i=0;i<256;i++){
+			G[i]=new ArrayList<Edge>();
+			G4[i]=new ArrayList<Edge>();
+			//System.out.print("\t"+i);
+		}
 		int[][] p_no_portal = new int[100][2];          //不经过传送门的最优路径
 		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
 		int[][] p_portal_entran = new int[100][2];      //以传送门入口为终点的最优路径
@@ -83,7 +88,8 @@ public class DragonSlayerImpl implements ExamOp
 	    // 不经过传送门可以经过龙卷风的最优路径。
 		p_no_portal = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , 15 , 15 ,1);
 		length_p_no_portal = detech_sequence_length(p_no_portal);
-		
+		System.out.println("figure out p_no_portal");
+
 		//判断地图中有无传送门，若没有传送门（出口值不更新）or 传送门出口处有火焰则无需计算经过传送门的最优路径。
 		for(int i = 0; i< 16;i++)
 		{
@@ -137,6 +143,7 @@ public class DragonSlayerImpl implements ExamOp
 			
 			length_p_portal_entran = detech_sequence_length(p_portal_entran);
 			length_p_portal_exit   = detech_sequence_length(p_portal_exit);
+
 			if((length_p_portal_exit+length_p_portal_entran) > length_p_no_portal)
 			{
 				path_sequence =p_no_portal;
@@ -153,6 +160,7 @@ public class DragonSlayerImpl implements ExamOp
 					}
 				}
 				path_sequence =p_portal_entran;
+				System.out.println("figure out p_portal");
 			}
 		}
 	}
@@ -164,8 +172,8 @@ public class DragonSlayerImpl implements ExamOp
 		int[][] p_tornado_inaccess = new int[100][2];
 		int length_p_tornado_access=0;
 		int length_p_tornado_inaccess=0;
-		int tornado_x=0;
-		int tornado_y=0;
+		int tornado_x=99;
+		int tornado_y=99;
 		
 		for(int i=0;i<16;i++) {
 			for(int j=0;j<16;j++) {
@@ -201,13 +209,14 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		 }
 		 p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y);
-		 for(int i=0; i<100;i++) {
+
+		 for(int i=0; i<99;i++) {
 			if(p_tornado_access[i][0] == tornado_x && p_tornado_access[i][1] == tornado_y) {
-				for (int j = 100; j>i; j--) {
+				for (int j = 99; j>i; j--) {
 					p_tornado_access[j][0]=p_tornado_access[j-1][0];
 					p_tornado_access[j][1]=p_tornado_access[j-1][1];
 				}
-				for (int j = 100; j>i+1; j--) {
+				for (int j = 99; j>i+1; j--) {
 					p_tornado_access[j][0]=p_tornado_access[j-1][0];
 					p_tornado_access[j][1]=p_tornado_access[j-1][1];
 				}
@@ -229,13 +238,13 @@ public class DragonSlayerImpl implements ExamOp
 					temp_map[i][j]=1;
 				}
 			}
-		 }		
+		 }
 		 p_tornado_inaccess = findpath(depart_x,depart_y,destin_x,destin_y);
 		 length_p_tornado_inaccess =detech_sequence_length(p_tornado_inaccess) ;
 		 if(length_p_tornado_access > length_p_tornado_inaccess ) {
 		 	p_tornado_access = p_tornado_inaccess;
 		 }
-		
+		System.out.println("p_cmp_tornado");
 		 return p_tornado_access;
 	}
 	
@@ -245,7 +254,7 @@ public class DragonSlayerImpl implements ExamOp
 	public static int detech_sequence_length(int[][] array) {
 		int k;
 		for(k =0; k<100;k++) {
-			if(array[k][1]== 999 && array[k][0]== 999) {  //###############################################################!!!!!
+			if(array[k][1]== 999 && array[k][0]== 999) {
 				return k;
 			}
 		}
@@ -397,7 +406,7 @@ public class DragonSlayerImpl implements ExamOp
 	{
 		if (s == t)
 		{
-			System.out.println("haha");
+			System.out.println("Find Optimistic path");
 			A.start = start;
 			A.getCost(Gmat);
 			Ans A2 = new Ans();
@@ -525,7 +534,8 @@ public class DragonSlayerImpl implements ExamOp
     public void update(int time)
     {
     	ComparePath();
-    	
+		System.out.println("Complete comparison");
+
     	int non_zero_row_index=0;
     	
 		int column3_cnt = sys_time;			
@@ -556,6 +566,7 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 	    	updateHero(time);//update title and state
+			System.out.println("update title and state");
 	    }
     }
 
