@@ -3,15 +3,17 @@
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/huawei/Ans.java" line="22" />
     <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="384" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="61" mnemonic="P" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/huawei/Ans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/Ans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/huawei/ArrayEdge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/Ans.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/Ans.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/ArrayEdge.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/PriorityQueue$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/PriorityQueue.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/huawei/PriorityQueue.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="113" column="28" selection-start-line="113" selection-start-column="28" selection-end-line="113" selection-end-column="28" />
+            <state relative-caret-position="499">
+              <caret line="91" column="19" selection-start-line="91" selection-start-column="19" selection-end-line="91" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state relative-caret-position="56">
+              <caret line="36" column="56" lean-forward="true" selection-start-line="36" selection-start-column="56" selection-end-line="36" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -165,10 +167,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="669" />
-    <option name="y" value="7" />
-    <option name="width" value="974" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="660" />
+    <option name="width" value="1257" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
@@ -205,7 +206,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550401579393" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550401879250" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -269,7 +270,7 @@
       <workItem from="1549979980428" duration="11311000" />
       <workItem from="1550307090628" duration="94000" />
       <workItem from="1550374205239" duration="2918000" />
-      <workItem from="1550400973629" duration="604000" />
+      <workItem from="1550400973629" duration="871000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -338,7 +339,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33197000" />
+    <option name="totallyTimeSpent" value="33464000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -350,10 +351,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="660" y="0" width="1257" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4950712" visible="true" weight="0.12739871" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4950712" visible="true" weight="0.19966583" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -362,7 +363,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5049288" side_tool="true" weight="0.20678337" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.329718" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33296824" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39587852" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -453,13 +454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -523,10 +517,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="36" column="56" lean-forward="true" selection-start-line="36" selection-start-column="56" selection-end-line="36" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="113" column="28" selection-start-line="113" selection-start-column="28" selection-end-line="113" selection-end-column="28" />
+        <state relative-caret-position="499">
+          <caret line="91" column="19" selection-start-line="91" selection-start-column="19" selection-end-line="91" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

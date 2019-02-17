@@ -89,7 +89,7 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			for(int j =0 ;j < 16;j++) 
 			{
-				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT||map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT)	
+				if(map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT)
 				{
 					portal_exit_x = i;
 					portal_exit_y = j;
@@ -144,10 +144,10 @@ public class DragonSlayerImpl implements ExamOp
 			{
 				int k=0;
 				for(int i=1; i< 100; i++) {
-					if(p_portal_entran[i][1] == 999) ///###########################################!!!!!!!
+					if(p_portal_entran[i][0] == 999)
 					{
+						p_portal_entran[i][0] = p_portal_exit[k][0];
 						p_portal_entran[i][1] = p_portal_exit[k][1];
-						p_portal_entran[i][2] = p_portal_exit[k][2];
 						k++;
 					}
 				}
@@ -243,7 +243,7 @@ public class DragonSlayerImpl implements ExamOp
 
 
 	//缁欏畾鍦板浘璧风偣&璧风偣&缁堢偣&杩斿洖鏈�浼樿矾寰勫簭鍒�
-	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y) throws FileNotFoundException{
+	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
 
 
 		//鍏ㄥ眬鍙橀噺锛歩nt[16][16] temp_map璁板綍鐫�褰撳墠鍦板浘鐨勪俊鎭細1浠ｈ〃涓嶅彲缁忚繃锛�0浠ｈ〃鍙粡杩囥��
