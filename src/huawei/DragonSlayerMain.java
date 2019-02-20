@@ -109,6 +109,8 @@ public class DragonSlayerMain
                 	label[i][j].setBackground (Color.LIGHT_GRAY);
                 }else if(map.table[i][j].element==MyElement.HERO_TORNADO){
                 	label[i][j].setBackground (Color.DARK_GRAY);
+                }else if(map.table[i][j].element==MyElement.HERO_TORNADO_PORTAL_EXIT){
+                	label[i][j].setBackground (Color.DARK_GRAY);
                 }
                 
             }
