@@ -4,45 +4,45 @@ import huawei.exam.*;
 
 /**
  * 实现类
- *
+ * 
  * 各方法请按要求返回，考试框架负责报文输出
  */
 public class DragonSlayerImpl implements ExamOp
 {
 	/**
-	 * ReturnCode(返回码枚举) .S001：重置成功 .S002：设置火焰成功 .S003：设置龙卷风成功 .S004：设置传送阵成功 .E001：非法命令
-	 * .E002：非法坐标 .E003：非法时间 .E004：操作时间不能小于系统时间 .E005：该区域不能设置元素 .E006：龙卷风数量已达上限
-	 * .E007：传送阵数量已达上限 .E008：传送阵的入口和出口重叠
-	 */
+     * ReturnCode(返回码枚举) .S001：重置成功 .S002：设置火焰成功 .S003：设置龙卷风成功 .S004：设置传送阵成功 .E001：非法命令
+     * .E002：非法坐标 .E003：非法时间 .E004：操作时间不能小于系统时间 .E005：该区域不能设置元素 .E006：龙卷风数量已达上限
+     * .E007：传送阵数量已达上限 .E008：传送阵的入口和出口重叠
+     */
+    
+    /**
+     * Area(区域类) int getX()：获取横坐标 void setX(int x)：设置横坐标 int getY()：获取纵坐标 void setY(int
+     * y)：设置纵坐标 Element getElement()：获取元素 void setElement(Element element)：设置元素 boolean
+     * equals(Object o)：区域横纵坐标相同，则区域相同
+     */
+    
+    /**
+     * Element(元素枚举) .NONE：空元素 .HERO：英雄 .DRAGON：恶龙 .FIRE：火焰 .TORNADO：龙卷风 .PORTAL：传送阵
+     */
+    
+    /**
+     * Hero(英雄类) Title getTitle()：获取称号 void setTitle(Title title)：设置称号 Status
+     * getStatus()：获取状态 void setStatus(Status status)：设置状态 Area getArea()：获取区域
+     * setArea(Area area)：设置区域
+     */
+    
+    /**
+     * Title(称号枚举) .WARRIOR：勇士 .DRAGON_SLAYER：屠龙者
+     */
+    
+    /**
+     * Status(状态枚举) .MARCHING：行进 .WAITING：等待
+     */
 
-	/**
-	 * Area(区域类) int getX()：获取横坐标 void setX(int x)：设置横坐标 int getY()：获取纵坐标 void setY(int
-	 * y)：设置纵坐标 Element getElement()：获取元素 void setElement(Element element)：设置元素 boolean
-	 * equals(Object o)：区域横纵坐标相同，则区域相同
-	 */
-
-	/**
-	 * Element(元素枚举) .NONE：空元素 .HERO：英雄 .DRAGON：恶龙 .FIRE：火焰 .TORNADO：龙卷风 .PORTAL：传送阵
-	 */
-
-	/**
-	 * Hero(英雄类) Title getTitle()：获取称号 void setTitle(Title title)：设置称号 Status
-	 * getStatus()：获取状态 void setStatus(Status status)：设置状态 Area getArea()：获取区域
-	 * setArea(Area area)：设置区域
-	 */
-
-	/**
-	 * Title(称号枚举) .WARRIOR：勇士 .DRAGON_SLAYER：屠龙者
-	 */
-
-	/**
-	 * Status(状态枚举) .MARCHING：行进 .WAITING：等待
-	 */
-
-
-	/**
-	 * 待考生实现，构造函数
-	 */
+    
+    /**
+     * 待考生实现，构造函数
+     */
 	public static Map map;
 	private int sys_time;
 	private boolean isTurnadoSet;
@@ -57,13 +57,13 @@ public class DragonSlayerImpl implements ExamOp
 	private static boolean[] vis = new boolean[256];
 	private static ArrayList<P> q = new ArrayList<P>();
 	private static ArrayList<Ans> paths = new ArrayList<Ans>();
-
-	//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
+	private static int tornado_waiting_time = 0;
+	
+			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
 		for(int i=0;i<256;i++){
 			G[i]=new ArrayList<Edge>();
 			G4[i]=new ArrayList<Edge>();
-			//System.out.print("\t"+i);
 		}
 		int[][] p_no_portal = new int[100][2];          //不经过传送门的最优路径
 		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
@@ -83,17 +83,22 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			path_sequence[i][0] = 999;
 			path_sequence[i][1] = 999;
+			p_portal_entran[i][0]  = 999;
+			p_portal_entran[i][0]  = 999;
+			p_portal_exit[i][0] = 999;
+			p_portal_exit[i][0] = 999;
 		}
-
-		// 不经过传送门可以经过龙卷风的最优路径。
+		
+	    // 不经过传送门可以经过龙卷风的最优路径。
 		p_no_portal = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , 15 , 15 ,1);
 		length_p_no_portal = detech_sequence_length(p_no_portal);
 		System.out.println("figure out p_no_portal");
 
+		
 		//判断地图中有无传送门，若没有传送门（出口值不更新）or 传送门出口处有火焰则无需计算经过传送门的最优路径。
 		for(int i = 0; i< 16;i++)
 		{
-			for(int j =0 ;j < 16;j++)
+			for(int j =0 ;j < 16;j++) 
 			{
 				if(map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
 				{
@@ -103,11 +108,13 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 		}
+		
+		
 		for(int i = 0; i< 16;i++)
 		{
-			for(int j =0 ;j < 16;j++)
+			for(int j =0 ;j < 16;j++) 
 			{
-				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT)
+				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT)			
 				{
 					FIRE_PORTAL_EXIT_x = i;
 					FIRE_PORTAL_EXIT_y = j;
@@ -115,15 +122,12 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 		}
-
-
-
-
-
+		
+		
 		if((FIRE_PORTAL_EXIT_x !=20 && FIRE_PORTAL_EXIT_y !=20)||(portal_exit_x ==20 && portal_exit_y ==20)) {
 			path_sequence = p_no_portal;
 		}
-		else
+		else 
 		{
 			//计算经过传送门的最优路径
 			for(int i = 0; i< 16;i++)
@@ -140,17 +144,17 @@ public class DragonSlayerImpl implements ExamOp
 			}
 
 			p_portal_entran = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , portal_entrance_x , portal_entrance_y , 0);
-
+			
 			p_portal_exit   = p_cmp_tornado(portal_exit_x,portal_exit_y ,15 , 15 , 1);
-
+			
 			length_p_portal_entran = detech_sequence_length(p_portal_entran);
 			length_p_portal_exit   = detech_sequence_length(p_portal_exit);
 
 			if((length_p_portal_exit+length_p_portal_entran) > length_p_no_portal)
 			{
-				path_sequence =p_no_portal;
+				path_sequence = p_no_portal;
 			}
-			else
+			else 
 			{
 				int k=0;
 				for(int i=1; i< 100; i++) {
@@ -166,8 +170,8 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 	}
-
-
+	
+	
 	// 对比经过或不经过龙卷风下的最优路径长度，返回最优路径序列
 	public static int[][] p_cmp_tornado(int depart_x,int depart_y,int destin_x, int destin_y,int status_portal_entran){
 		int[][] p_tornado_access = new int[100][2];
@@ -176,8 +180,20 @@ public class DragonSlayerImpl implements ExamOp
 		int length_p_tornado_inaccess=0;
 		int tornado_x=99;
 		int tornado_y=99;
-
-
+		boolean is_through_torando = false;
+		int cost_plus_tornado = 0; //因为龙卷风未在findpath中考虑，所以cost返回值没有龙卷风的损耗，使用这个变量反应龙卷风的损耗，
+		
+		Collection_pathseq_cost pathseq_cost_tornado_access = new Collection_pathseq_cost();
+		Collection_pathseq_cost pathseq_cost_tornado_inaccess = new Collection_pathseq_cost();
+		
+		//initialization
+		for(int i = 0 ;i< 100;i++) {
+			p_tornado_inaccess[i][0] = 999;
+			p_tornado_inaccess[i][1] = 999;
+			p_tornado_access[i][0] = 999;
+			p_tornado_access[i][1] = 999;
+		}
+		
 		for(int i= 0; i<16;i++)
 		{
 			for(int j =0;j<16;j++)
@@ -186,7 +202,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
-
+		
 		for(int i=0;i<16;i++) {
 			for(int j=0;j<16;j++) {
 				if(map.table[i][j].element == MyElement.FIRE) {
@@ -194,7 +210,7 @@ public class DragonSlayerImpl implements ExamOp
 				}
 				else if(map.table[i][j].element == MyElement.PORTAL_ENTRANCE) {
 					temp_map[i][j]=status_portal_entran;
-				}
+			    }
 				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
 					temp_map[i][j]=0;
 					tornado_x = i;
@@ -212,10 +228,12 @@ public class DragonSlayerImpl implements ExamOp
 					temp_map[i][j]=0;
 				}
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
-					temp_map[i][j]=1;
+					temp_map[i][j]=1;	
 				}
 				else if(map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT) {
 					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
 				}
 				else if(map.table[i][j].element == MyElement.TORNADO) {
 					temp_map[i][j]=0;
@@ -223,53 +241,101 @@ public class DragonSlayerImpl implements ExamOp
 					tornado_y = j;
 				}
 			}
-		}
-		p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y);
-
-		for(int i=0; i<99;i++) {
+		 }
+		
+		
+		 pathseq_cost_tornado_access= findpath(depart_x,depart_y,destin_x,destin_y);
+		 p_tornado_access=pathseq_cost_tornado_access.col_pathseq;
+		 
+		 for(int i=0; i<99;i++) {
 			if(p_tornado_access[i][0] == tornado_x && p_tornado_access[i][1] == tornado_y) {
-				for (int j = 99; j>i; j--) {
-					p_tornado_access[j][0]=p_tornado_access[j-1][0];
-					p_tornado_access[j][1]=p_tornado_access[j-1][1];
+				for(int k=tornado_waiting_time;k<3;k++)
+				{
+					for (int j = 99; j>i; j--) {
+						p_tornado_access[j][0]=p_tornado_access[j-1][0];
+						p_tornado_access[j][1]=p_tornado_access[j-1][1];
+					}
 				}
-				for (int j = 99; j>i+1; j--) {
-					p_tornado_access[j][0]=p_tornado_access[j-1][0];
-					p_tornado_access[j][1]=p_tornado_access[j-1][1];
+				cost_plus_tornado = 3 - tornado_waiting_time + 1;
+				
+				if(tornado_waiting_time == 3)
+				{
+					tornado_waiting_time = 0;
 				}
-				p_tornado_access[i][0]=tornado_x;
-				p_tornado_access[i][1]=tornado_y;
-				p_tornado_access[i+1][0]=tornado_x;
-				p_tornado_access[i+1][1]=tornado_y;
+				is_through_torando = true;
+				break;
 			}
-		}
-		length_p_tornado_access = detech_sequence_length(p_tornado_access);
-
-
-		for(int i=0;i<16;i++) {
-			for(int j=0;j<16;j++) {
-				if(map.table[i][j].element == MyElement.TORNADO) {
-					temp_map[i][j]=1;
+		 }
+		 length_p_tornado_access = detech_sequence_length(p_tornado_access);
+		 
+		if(is_through_torando) {
+			 if(map.table[depart_x][depart_y].element == MyElement.HERO_TORNADO || map.table[depart_x][depart_y].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
+			 {}
+			 else
+			 {
+				 for(int i=0;i<16;i++) {
+					for(int j=0;j<16;j++) {
+						if(map.table[i][j].element == MyElement.TORNADO) {
+							temp_map[i][j]=1;
+						}
+						else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
+							temp_map[i][j] = 1;
+						}
+						else if(map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT) {
+							temp_map[i][j]=1;
+						}
+						else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
+							temp_map[i][j]=1;
+						}
+					}
+				 } 
+				 pathseq_cost_tornado_inaccess = findpath(depart_x,depart_y,destin_x,destin_y);
+				 p_tornado_inaccess = pathseq_cost_tornado_inaccess.col_pathseq;
+				 length_p_tornado_inaccess =detech_sequence_length(p_tornado_inaccess) ;
+				//如果cost小的那个的序列全是999,那么英雄当前有多条最优路径，否则英雄当前无路或仅有一条路。
+				if((pathseq_cost_tornado_access.col_cost+cost_plus_tornado) > pathseq_cost_tornado_inaccess.col_cost )
+				{
+					if(p_tornado_inaccess[0][0] == 999){  
+						p_tornado_access = p_tornado_inaccess;   //多条不走龙卷风的最优路径，但是返回全是999，代表有多条更短的路径能够到达。所以返回999让英雄等待
+				    }
+					else {  
+						p_tornado_access = p_tornado_inaccess;   //否则不走龙卷风仅有一条最优路径。
+					}
+				
 				}
-				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
-					temp_map[i][j] = 1;
+				else if((pathseq_cost_tornado_access.col_cost+cost_plus_tornado)<  pathseq_cost_tornado_inaccess.col_cost )
+				{
+					if(p_tornado_access[0][0] == 999){  
+						p_tornado_access = p_tornado_access;   //多条走龙卷风的最优路径，但是返回全是999，代表有多条更短的路径能够到达。所以返回999让英雄等待
+				    }
+					else {  
+						p_tornado_access = p_tornado_access;   //否则不走龙卷风仅有一条最优路径。
+					}
 				}
-			}
+				else if((pathseq_cost_tornado_access.col_cost+cost_plus_tornado) == pathseq_cost_tornado_inaccess.col_cost )
+				{
+					
+					for(int i = 0 ;i< 100;i++) {
+						p_tornado_access[i][0] = 999;
+						p_tornado_access[i][1] = 999;
+					}   //走龙卷风的最优路径和不走龙卷风的最优路径相同耗费英雄不动。
+				}
+				 System.out.println("figure out comparison between tornado_access and tornado_inaccess");
+			 }
 		}
-		p_tornado_inaccess = findpath(depart_x,depart_y,destin_x,destin_y);
-		length_p_tornado_inaccess =detech_sequence_length(p_tornado_inaccess) ;
-		if(length_p_tornado_access > length_p_tornado_inaccess ) {
-			p_tornado_access = p_tornado_inaccess;
-		}
-		System.out.println("figure out comparison between tornado_access and tornado_inaccess");
-		return p_tornado_access;
+		 return p_tornado_access;
 	}
-
-
-
+	
+	
+	
 	//检测最优路径序列长度，返回长度
 	public static int detech_sequence_length(int[][] array) {
 		int k;
-		for(k =0; k<100;k++) {
+		if(array[0][1]== 999 && array[0][0]== 999)
+		{
+			return 100;
+		}
+		for(k =1; k<100;k++) {
 			if(array[k][1]== 999 && array[k][0]== 999) {
 				return k;
 			}
@@ -279,21 +345,18 @@ public class DragonSlayerImpl implements ExamOp
 
 
 
-
-
-
-
-
-
-
-
-	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
+	
+	
+	
+	
+	
+	public static Collection_pathseq_cost findpath(int depart_x, int depart_y, int destin_x, int destin_y){
 
 		for(int i = 0; i<256; i++){
 			vis[i] = false;
 		}
 
-		int[][] path_seq = new int[100][2];
+		int[][] path_seq = new int[100][2];   
 		for(int i= 0; i< 100 ; i++)
 		{
 			path_seq[i][0]=999;
@@ -367,7 +430,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
-
+		
 		//清空G
 		for(int i = 0;i<256;i++)
 		{
@@ -391,6 +454,9 @@ public class DragonSlayerImpl implements ExamOp
 
 		Ans ans = new Ans();
 		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, depart_x*16+depart_y);
+		
+		Collection_pathseq_cost return_pathseq_cost = new Collection_pathseq_cost();
+		
 		if(paths.size()==1)
 		{
 			int NodeNum=1;
@@ -402,9 +468,21 @@ public class DragonSlayerImpl implements ExamOp
 				path_seq[NodeNum][1] = paths.get(0).path.get(j) % 16 ;
 				NodeNum++;
 			}
+			return_pathseq_cost.col_pathseq = path_seq;
+			return_pathseq_cost.col_cost = paths.get(0).path.size(); //仅一条最优路径，返回最优路径cost和路径的path_seq
+		}
+		else if(paths.size()>1)
+		{
+			return_pathseq_cost.col_pathseq = path_seq;
+			return_pathseq_cost.col_cost = paths.get(0).path.size();  //有多条最优路径，返回最优路径的cost和全为999的seq
+		}
+		else if(paths.size()==0)
+		{
+			return_pathseq_cost.col_pathseq = path_seq;  	//无最优路径，返回最优路径的cost=999和全为999的seq
+			return_pathseq_cost.col_cost = 999;
 		}
 		paths.clear();
-		return path_seq;
+		return return_pathseq_cost;
 	}
 
 
@@ -442,10 +520,10 @@ public class DragonSlayerImpl implements ExamOp
 
 
 
-
-
-
-
+	
+	
+	
+	
 	public static void dijkstra(int s)
 	{
 
@@ -505,12 +583,12 @@ public class DragonSlayerImpl implements ExamOp
 		}
 	}
 
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
 	public static void sortingQueue() {
 		for (int i=0;i< q.size();i++ )
 		{
@@ -536,13 +614,11 @@ public class DragonSlayerImpl implements ExamOp
 			});
 		}
 	}
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
 
@@ -575,20 +651,24 @@ public class DragonSlayerImpl implements ExamOp
 				break;
 			}
 		}
+		
+		
 		if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.PORTAL_EXIT)
 		{
 			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_PORTAL_EXIT;
 		}
 		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO)
 		{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO;
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_TORNADO;
+			tornado_waiting_time++;
 		}
 		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO_PORTAL_EXIT)
 		{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
+			tornado_waiting_time++;
 		}
 		else
-		{
+			{
 			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO;
 		}
 
@@ -599,21 +679,21 @@ public class DragonSlayerImpl implements ExamOp
 		}
 
 	}
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
 	//更新系统时间&英雄位置&称号&行进状态总函数。
-	public void update(int time)
-	{
-		ComparePath();
+    public void update(int time)
+    {
+    	ComparePath();
 		System.out.println("Complete comparison");
 
-		int non_zero_row_index=0;
-
-		int column3_cnt = sys_time;
+    	int non_zero_row_index=0;
+    	
+		int column3_cnt = sys_time;			
 	    /*if(path_sequence[1][0]==hero.getArea().getX() && path_sequence[1][1]==hero.getArea().getX()){
 	    	hero.setStatus(Status.WAITING);
 			sys_time = time;
@@ -622,8 +702,8 @@ public class DragonSlayerImpl implements ExamOp
 			hero.setStatus(Status.WAITING);
 			sys_time = time;
 		}
-		else
-		{
+	    else
+	    {
 			hero.setStatus(Status.MARCHING);
 			for(int i =0;i<100;i++){
 				if(path_sequence[i][1]!=999) {
@@ -641,39 +721,39 @@ public class DragonSlayerImpl implements ExamOp
 					column3_cnt++;
 				}
 			}
-			updateHero(time);//update title and state
+	    	updateHero(time);//update title and state
 			System.out.println("update title and state");
-		}
-	}
+	    }
+    }
 
 
-	public DragonSlayerImpl()
-	{
-		this.map=new Map();
-		this.sys_time=0;
-		this.isPortalSet=false;
-		this.isTurnadoSet=false;
-		this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
-		this.isTurnadoSet=false;
-		this.isPortalSet=false;
-	}
-
-	/**
-	 * 待考生实现，系统重置
-	 *
-	 * @return 返回码
-	 */
-	@Override
-	public OpResult reset()
-	{
-		this.map=new Map();
-		this.sys_time=0;
-		this.isPortalSet=false;
-		this.isTurnadoSet=false;
-		this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
-		this.isTurnadoSet=false;
-		this.isPortalSet=false;
-		for(int i= 0; i<16;i++)
+    public DragonSlayerImpl()
+    {
+    	this.map=new Map();
+    	this.sys_time=0;
+    	this.isPortalSet=false;
+    	this.isTurnadoSet=false;
+    	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
+    	this.isTurnadoSet=false;
+    	this.isPortalSet=false;
+    }
+    
+    /**
+     * 待考生实现，系统重置
+     * 
+     * @return 返回码
+     */
+    @Override
+    public OpResult reset()
+    {
+    	this.map=new Map();
+    	this.sys_time=0;
+    	this.isPortalSet=false;
+    	this.isTurnadoSet=false;
+    	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
+    	this.isTurnadoSet=false;
+    	this.isPortalSet=false;
+    	for(int i= 0; i<16;i++)
 		{
 			for(int j =0;j<16;j++)
 			{
@@ -681,195 +761,195 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
-
-		return new OpResult(ReturnCode.S001);
-	}
-
-	/**
-	 * 待考生实现，设置火焰
-	 *
-	 * @param area 设置区域
-	 * @param time 设置时间
-	 * @return 返回码
-	 */
-	@Override
-	public OpResult setFire(Area area, int time)
-	{
-		if(sys_time<=time)
-		{
-			if(sys_time<time){
-				update(time);
-			}
-			int x=area.getX();
-			int y=area.getY();
-			char flag=isCollision(x,y);
-			if(flag==1)
-			{
-				this.map.setMap(x, y, MyElement.FIRE);
+    	
+       	return new OpResult(ReturnCode.S001);        
+    }
+    
+    /**
+     * 待考生实现，设置火焰
+     * 
+     * @param area 设置区域
+     * @param time 设置时间
+     * @return 返回码
+     */
+    @Override
+    public OpResult setFire(Area area, int time)
+    {    	
+    	if(sys_time<=time)
+    	{
+    		if(sys_time<time){
+    			update(time);
+    		}
+    		int x=area.getX();
+        	int y=area.getY();
+        	char flag=isCollision(x,y);
+    		if(flag==1)
+    		{
+    			this.map.setMap(x, y, MyElement.FIRE);
 				System.out.println("Fire set at ("+x+","+y+")");
-				return new OpResult(ReturnCode.S002);
-			}else if(flag==2){
-				this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
+    			return new OpResult(ReturnCode.S002);
+    		}else if(flag==2){
+    			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
 				System.out.println("Fire set at ("+x+","+y+")");
-				return new OpResult(ReturnCode.S002);
-			}else{
+    			return new OpResult(ReturnCode.S002);
+    		}else{
 				System.out.println("Collision! SF failed!");
-				return new OpResult(ReturnCode.E005);
-			}
-		}
-		else{
+    			return new OpResult(ReturnCode.E005);
+    		}
+    	}
+    	else{
 			System.out.println("Time ERROR!");
-			return new OpResult(ReturnCode.E004);
-		}
-		// return new OpResult(ReturnCode.E001);
-	}
-
-
-	/**
-	 * 待考生实现，设置龙卷风
-	 *
-	 * @param area 设置区域
-	 * @param time 设置时间
-	 * @return 返回码
-	 */
-	@Override
-	public OpResult setTornado(Area area, int time)
-	{
-		if(sys_time<=time)
-		{
-			if(sys_time<time){
-				update(time);
-			}
-			int x=area.getX();
-			int y=area.getY();
-			char flag=isCollision(x,y);
-			if(flag==0)
-			{
+    		return new OpResult(ReturnCode.E004);
+    	}
+    	 // return new OpResult(ReturnCode.E001);
+    }
+    
+    
+    /**
+     * 待考生实现，设置龙卷风
+     * 
+     * @param area 设置区域
+     * @param time 设置时间
+     * @return 返回码
+     */
+    @Override
+    public OpResult setTornado(Area area, int time)
+    {	
+    	if(sys_time<=time)
+    	{
+    		if(sys_time<time){
+    			update(time);
+    		}
+    		int x=area.getX();
+        	int y=area.getY();
+        	char flag=isCollision(x,y);
+    		if(flag==0)
+    		{
 				System.out.println("ERROR:Collision! ST failed!");
-				return new OpResult(ReturnCode.E005);
-
-			}else{
-				if(this.isTurnadoSet){
+    			return new OpResult(ReturnCode.E005);
+    			
+    		}else{
+    			if(this.isTurnadoSet){
 					System.out.println("ERROR:Turnado has been set before!");
-					return new OpResult(ReturnCode.E006);
-				}else{
-					if(flag==1)
-					{
-						this.map.setMap(x, y, MyElement.FIRE);
-					}else if(flag==2){
-						this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
-					}
+    				return new OpResult(ReturnCode.E006);
+    			}else{
+    				if(flag==1)
+    	    		{
+    	    			this.map.setMap(x, y, MyElement.TORNADO);
+    	    		}else if(flag==2){
+    	    			this.map.setMap(x, y, MyElement.TORNADO_PORTAL_EXIT);
+    	    		}
 					System.out.println("Turnado set at ("+x+","+y+")");
-					this.isTurnadoSet=true;
-					return new OpResult(ReturnCode.S002);
-				}
-			}
-		}else{
+    				this.isTurnadoSet=true;
+	    			return new OpResult(ReturnCode.S002);
+    			}
+    		}
+    	}else{
 			System.out.println("Time ERROR!");
-			return new OpResult(ReturnCode.E004);
-		}
-		// return new OpResult(ReturnCode.E001);
-	}
-
-	/**
-	 * 待考生实现，设置传送阵
-	 *
-	 * @param entry 入口区域
-	 * @param exit 出口区域
-	 * @param time 设置时间
-	 * @return 返回码
-	 */
-	@Override
-	public OpResult setPortal(Area entry, Area exit, int time)
-	{
-		if(sys_time<=time)
-		{
-			if(sys_time<time){
-				update(time);
-			}
-			int entry_x=entry.getX();
-			int entry_y=entry.getY();
-			int exit_x=exit.getX();
-			int exit_y=exit.getY();
-			char flag=isCollision(entry_x,entry_y,exit_x,exit_y);
-			if(flag==0)
-			{
+    		return new OpResult(ReturnCode.E004);
+    	}
+    	 // return new OpResult(ReturnCode.E001);
+    }
+    
+    /**
+     * 待考生实现，设置传送阵
+     * 
+     * @param entry 入口区域
+     * @param exit 出口区域
+     * @param time 设置时间
+     * @return 返回码
+     */
+    @Override
+    public OpResult setPortal(Area entry, Area exit, int time)
+    {
+    	if(sys_time<=time)
+    	{
+    		if(sys_time<time){
+    			update(time);
+    		}
+        	int entry_x=entry.getX();
+        	int entry_y=entry.getY();
+        	int exit_x=exit.getX();
+        	int exit_y=exit.getY();
+        	char flag=isCollision(entry_x,entry_y,exit_x,exit_y);
+    		if(flag==0)
+    		{
 				System.out.println("ERROR:Collision! SP failed!");
-				return new OpResult(ReturnCode.E005);
-			}else{
-				if(this.isPortalSet){
+    			return new OpResult(ReturnCode.E005);    			
+    		}else{
+    			if(this.isPortalSet){
 					System.out.println("ERROR:Portal has been set before!");
-					return new OpResult(ReturnCode.E007);
-				}else{
-					if(flag==3){
+    				return new OpResult(ReturnCode.E007);
+    			}else{
+    				if(flag==3){
 						System.out.println("ERROR:The entrance should be different to the exit!");
-						return new OpResult(ReturnCode.E008);
-					}else{
-						this.map.setMap(entry_x, entry_y, MyElement.PORTAL_ENTRANCE);
-						this.map.setMap(exit_x, exit_y, MyElement.PORTAL_EXIT);
+    					return new OpResult(ReturnCode.E008);
+    				}else{
+        	    		this.map.setMap(entry_x, entry_y, MyElement.PORTAL_ENTRANCE);
+        	    		this.map.setMap(exit_x, exit_y, MyElement.PORTAL_EXIT);
 						System.out.println("Portal_entry set at ("+entry_x+","+entry_y+")");
-						System.out.println("Portal_exit set at ("+exit_x+","+exit_y+")");
-						return new OpResult(ReturnCode.S002);
-					}
-				}
-			}
-		}else{
+        	    		System.out.println("Portal_exit set at ("+exit_x+","+exit_y+")");
+    	    			return new OpResult(ReturnCode.S002);
+    				}
+    			}
+    		}
+    	}else{
 			System.out.println("Time ERROR!");
-			return new OpResult(ReturnCode.E004);
-		}
-		//  return new OpResult(ReturnCode.E001);
-	}
-
-	/**
-	 * 待考生实现，查询
-	 *
-	 * @param time 查询时间
-	 * @return 英雄信息
-	 */
-	@Override
-	public OpResult query(int time)
-	{
-		if(time>=this.sys_time)
-		{
-			if(time>this.sys_time){
-				update(time);
-			}
+    		return new OpResult(ReturnCode.E004);
+    	}
+      //  return new OpResult(ReturnCode.E001);
+    }
+    
+    /**
+     * 待考生实现，查询
+     * 
+     * @param time 查询时间
+     * @return 英雄信息
+     */
+    @Override
+    public OpResult query(int time)
+    {
+        if(time>=this.sys_time)
+    	{
+    		if(time>this.sys_time){
+        		update(time);
+        	}
 			System.out.println(this.hero.getTitle()+" "+this.hero.getStatus()+" at("+this.hero.getArea().getX()+","+this.hero.getArea().getY()+")");
-			return new OpResult(this.hero);
-		}else{
+    		return new OpResult(this.hero);
+    	}else{
 			System.out.println("Time ERROR!");
-			return new OpResult(ReturnCode.E004);
-		}
-	}
-
-	public char isCollision(int x,int y)
-	{
-		char flag=1;// 1:NONE 2:PORTAL_EXIT 3:OTHERS
-		if(this.map.table[x][y].element==MyElement.NONE)
-		{
-			flag=1;
-		}else if(this.map.table[x][y].element==MyElement.PORTAL_EXIT){
-			flag=2;
-		}else{
-			flag=0;
-		}
-		return flag;
-	}
-
-	public char isCollision(int entry_x,int entry_y,int exit_x, int exit_y){
-		char flag=1;// 1:NONE 2:PORTAL_EXIT 3:entry is the same as exit 0:OTHERS
-		if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE))
-		{
-			flag=1;
-		}else if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.PORTAL_EXIT)){
-			flag=2;
-		}else if((this.map.table[entry_x][entry_y].element==MyElement.PORTAL_EXIT)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE)){
-			flag=2;
-		}else if((entry_x==exit_x)&&(entry_y==exit_y)){
-			flag=3;
-		}else{
-			flag=0;
-		}
-		return flag;
-	}
+    		return new OpResult(ReturnCode.E004);	
+    	}
+    }
+    
+    public char isCollision(int x,int y)
+    {
+    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:OTHERS
+    	if(this.map.table[x][y].element==MyElement.NONE)
+    	{
+    		flag=1;
+    	}else if(this.map.table[x][y].element==MyElement.PORTAL_EXIT){
+    		flag=2;
+    	}else{
+    		flag=0;
+    	}
+    	return flag;
+    }
+    
+    public char isCollision(int entry_x,int entry_y,int exit_x, int exit_y){
+    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:entry is the same as exit 0:OTHERS
+    	if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE))
+    	{
+    		flag=1;
+    	}else if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.PORTAL_EXIT)){
+    		flag=2;
+    	}else if((this.map.table[entry_x][entry_y].element==MyElement.PORTAL_EXIT)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE)){
+    		flag=2;
+    	}else if((entry_x==exit_x)&&(entry_y==exit_y)){
+    		flag=3;
+    	}else{
+    		flag=0;
+    	}
+    	return flag;
+    }
 }

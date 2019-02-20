@@ -7,10 +7,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="630" mnemonic="U" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="874" column="1" selection-start-line="874" selection-start-column="1" selection-end-line="874" selection-end-column="1" />
+            <state relative-caret-position="412">
+              <caret line="830" column="5" lean-forward="true" selection-start-line="830" selection-start-column="5" selection-end-line="830" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -121,32 +118,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="huawei" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -223,7 +195,7 @@
       <workItem from="1550628188614" duration="351000" />
       <workItem from="1550662312554" duration="2690000" />
       <workItem from="1550666831680" duration="3025000" />
-      <workItem from="1550672072676" duration="1347000" />
+      <workItem from="1550672072676" duration="2615000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -358,11 +330,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550671139212</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="success！">
+      <created>1550673438845</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1550673438846</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42020000" />
+    <option name="totallyTimeSpent" value="43288000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -375,7 +354,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="671" y="3" width="1257" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" weight="0.20467836" />
       <window_info id="Structure" order="1" sideWeight="0.50448835" side_tool="true" weight="0.12846482" />
@@ -432,6 +410,18 @@
     <MESSAGE value="修正reset问题" />
     <MESSAGE value="success！" />
     <option name="LAST_COMMIT_MESSAGE" value="success！" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java</url>
+          <line>842</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -519,8 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="874" column="1" selection-start-line="874" selection-start-column="1" selection-end-line="874" selection-end-column="1" />
+        <state relative-caret-position="412">
+          <caret line="830" column="5" lean-forward="true" selection-start-line="830" selection-start-column="5" selection-end-line="830" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
