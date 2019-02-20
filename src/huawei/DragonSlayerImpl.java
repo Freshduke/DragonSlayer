@@ -1,7 +1,6 @@
 package huawei;
 import java.util.*;
 import huawei.exam.*;
-import org.jetbrains.annotations.Contract;
 
 /**
  * 实现类
@@ -56,8 +55,8 @@ public class DragonSlayerImpl implements ExamOp
 	private static ArrayList<Edge> G[] = new ArrayList[256];
 	private static int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
 	private static boolean[] vis = new boolean[256];
-	private static ArrayList<P> q = new ArrayList<>();
-	private static ArrayList<Ans> paths = new ArrayList<>();
+	private static ArrayList<P> q = new ArrayList<P>();
+	private static ArrayList<Ans> paths = new ArrayList<Ans>();
 
 			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
 	public void ComparePath(){
@@ -256,7 +255,6 @@ public class DragonSlayerImpl implements ExamOp
 	
 	
 	//检测最优路径序列长度，返回长度
-	@Contract(pure = true)
 	public static int detech_sequence_length(int[][] array) {
 		int k;
 		for(k =0; k<100;k++) {
@@ -555,32 +553,64 @@ public class DragonSlayerImpl implements ExamOp
 				this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.NONE;
 			}
 		}
-
+		int j,k=0;
+		int flag=0;
 		for(int i =0; i<100;i++) {
 			if(path_sequence_with_time[i][2]==time) {
-				hero.setArea(new Area(path_sequence_with_time[i][0],path_sequence_with_time[i][1]));
-				hero.setStatus(Status.MARCHING);
+				if(this.map.table[(path_sequence_with_time[i][0])][(path_sequence_with_time[i][1])].element==MyElement.PORTAL_ENTRANCE){
+					for(j=0;j<16;j++){
+						for(k=0;k<16;k++){
+							if((this.map.table[j][k].element==MyElement.PORTAL_EXIT)||(this.map.table[j][k].element==MyElement.TORNADO_PORTAL_EXIT)){
+								flag=1;break;
+							}
+						}
+						if(flag==1){
+							break;
+						}
+					}
+					hero.setArea(new Area(j,k));
+					hero.setStatus(Status.MARCHING);
+					if(this.map.table[j][k].element == MyElement.PORTAL_EXIT)
+					{
+						this.map.table[j][k].element = MyElement.HERO_PORTAL_EXIT;
+					}
+					else if(this.map.table[j][k].element == MyElement.TORNADO)
+					{
+						this.map.table[j][k].element = MyElement.HERO_TORNADO;
+					}
+					else if(this.map.table[j][k].element == MyElement.TORNADO_PORTAL_EXIT)
+					{
+						this.map.table[j][k].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
+					}
+					else{
+						this.map.table[j][k].element = MyElement.HERO;
+					}
+				}else{
+					hero.setArea(new Area(path_sequence_with_time[i][0],path_sequence_with_time[i][1]));
+					hero.setStatus(Status.MARCHING);
+					if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.PORTAL_EXIT)
+					{
+						this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_PORTAL_EXIT;
+					}
+					else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO)
+					{
+						this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO;
+					}
+					else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO_PORTAL_EXIT)
+					{
+						this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
+					}
+					else{
+						this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO;
+					}
+				}
+				
 				sys_time = time;
 				point_to_hero_lastest_position = i;
 				break;
 			}
 		}
-		if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.PORTAL_EXIT)
-		{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_PORTAL_EXIT;
-		}
-		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO)
-		{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO;
-		}
-		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO_PORTAL_EXIT)
-		{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
-		}
-		else
-			{
-			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO;
-		}
+		
 
 
 		if(hero.getArea().getX() == 15 && hero.getArea().getY()==15)
