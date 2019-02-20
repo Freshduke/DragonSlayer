@@ -2,9 +2,9 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/huawei/Ans.java" line="22" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="415" mnemonic="3" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="62" mnemonic="P" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="593" mnemonic="U" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="412" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="61" mnemonic="P" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="630" mnemonic="U" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
@@ -45,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="703">
-              <caret line="667" column="9" selection-start-line="667" selection-start-column="9" selection-end-line="667" selection-end-column="9" />
+            <state relative-caret-position="825">
+              <caret line="874" column="1" selection-start-line="874" selection-start-column="1" selection-end-line="874" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -161,7 +161,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -222,7 +222,8 @@
       <workItem from="1550400973629" duration="2014000" />
       <workItem from="1550628188614" duration="351000" />
       <workItem from="1550662312554" duration="2690000" />
-      <workItem from="1550666831680" duration="2242000" />
+      <workItem from="1550666831680" duration="3025000" />
+      <workItem from="1550672072676" duration="1347000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -343,11 +344,25 @@
       <option name="project" value="LOCAL" />
       <updated>1550664278981</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="修正reset问题">
+      <created>1550670673292</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1550670673292</updated>
+    </task>
+    <task id="LOCAL-00019" summary="success！">
+      <created>1550671139212</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1550671139212</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39890000" />
+    <option name="totallyTimeSpent" value="42020000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -371,7 +386,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5065076" side_tool="true" weight="0.12686567" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.10843374" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.084337346" />
       <window_info anchor="bottom" x="8" y="580" width="775" height="485" id="Debug" order="3" type="WINDOWED" weight="0.39978093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -414,7 +429,9 @@
     <MESSAGE value="补充HERO_TORNADO" />
     <MESSAGE value="补充HERO_TORANDO_PORTAL_EXIT" />
     <MESSAGE value="修正999越界bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正999越界bug" />
+    <MESSAGE value="修正reset问题" />
+    <MESSAGE value="success！" />
+    <option name="LAST_COMMIT_MESSAGE" value="success！" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -456,13 +473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/P.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -500,10 +510,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="667" column="9" selection-start-line="667" selection-start-column="9" selection-end-line="667" selection-end-column="9" />
+        <state relative-caret-position="825">
+          <caret line="874" column="1" selection-start-line="874" selection-start-column="1" selection-end-line="874" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
