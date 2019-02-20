@@ -529,17 +529,49 @@ public class DragonSlayerImpl implements ExamOp
 
 	//更新英雄称号&行进状态
 	public void updateHero(int time){
+
+		int point_to_hero_lastest_position = 0;
+
+		if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_PORTAL_EXIT)
+		{
+			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.PORTAL_EXIT;
+		}
+		else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO)
+		{
+			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO;
+		}
+		else {
+			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.NONE;
+		}
+
 		for(int i =0; i<100;i++) {
 			if(path_sequence_with_time[i][2]==time) {
 				hero.setArea(new Area(path_sequence_with_time[i][0],path_sequence_with_time[i][1]));
 				hero.setStatus(Status.MARCHING);
 				sys_time = time;
+				point_to_hero_lastest_position = i;
+				break;
 			}
 		}
+		if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.PORTAL_EXIT)
+		{
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO_PORTAL_EXIT;
+		}
+		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO)
+		{
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO;
+		}
+		else
+			{
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element = MyElement.HERO;
+		}
+
+
 		if(hero.getArea().getX() == 15 && hero.getArea().getY()==15)
 		{
 			hero.setTitle(Title.DRAGON_SLAYER);
 		}
+
 	}
 	
 	//更新系统时间&英雄位置&称号&行进状态总函数。
