@@ -398,8 +398,7 @@ public class DragonSlayerImpl implements ExamOp
 		}
 
 
-		dijkstra(0,G);
-
+		dijkstra(depart_x*16+depart_y);
 		Ans ans = new Ans();
 		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, depart_x*16+depart_y);
 		if(paths.size()==1)
@@ -453,7 +452,7 @@ public class DragonSlayerImpl implements ExamOp
 
 
 
-	public static void dijkstra(int s,ArrayList<Edge>[] G)
+	public static void dijkstra(int s)
 	{
 
 		// 清空G4
