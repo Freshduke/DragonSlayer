@@ -1,6 +1,7 @@
 package huawei;
 import java.util.*;
 import huawei.exam.*;
+import org.jetbrains.annotations.Contract;
 
 /**
  * 实现类
@@ -95,7 +96,7 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			for(int j =0 ;j < 16;j++) 
 			{
-				if(map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT)
+				if(map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
 				{
 					portal_exit_x = i;
 					portal_exit_y = j;
@@ -202,6 +203,9 @@ public class DragonSlayerImpl implements ExamOp
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
 					temp_map[i][j]=1;	
 				}
+				else if(map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT) {
+					temp_map[i][j]=0;
+				}
 				else if(map.table[i][j].element == MyElement.TORNADO) {
 					temp_map[i][j]=0;
 					tornado_x = i;
@@ -252,6 +256,7 @@ public class DragonSlayerImpl implements ExamOp
 	
 	
 	//检测最优路径序列长度，返回长度
+	@Contract(pure = true)
 	public static int detech_sequence_length(int[][] array) {
 		int k;
 		for(k =0; k<100;k++) {
@@ -541,6 +546,10 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO;
 		}
+		else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
+		{
+			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO_PORTAL_EXIT;
+		}
 		else {
 			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.NONE;
 		}
@@ -561,6 +570,10 @@ public class DragonSlayerImpl implements ExamOp
 		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO)
 		{
 			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO;
+		}
+		else if(this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[point_to_hero_lastest_position][1]].element == MyElement.TORNADO_PORTAL_EXIT)
+		{
+			this.map.table[path_sequence_with_time[point_to_hero_lastest_position][0]][path_sequence_with_time[0][1]].element = MyElement.HERO_TORNADO_PORTAL_EXIT;
 		}
 		else
 			{

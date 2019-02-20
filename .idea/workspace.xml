@@ -2,14 +2,16 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/huawei/Ans.java" line="22" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="410" mnemonic="3" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="61" mnemonic="P" />
-    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="578" mnemonic="U" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="415" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="62" mnemonic="P" />
+    <bookmark url="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" line="591" mnemonic="U" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DragonSlayer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DragonSlayer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/huawei/MyElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/MyElement.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="205" column="37" lean-forward="true" selection-start-line="205" selection-start-column="37" selection-end-line="205" selection-end-column="37" />
+            <state relative-caret-position="-19">
+              <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -38,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huawei/MyElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+            <state relative-caret-position="285">
+              <caret line="15" column="28" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -47,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="110" column="64" lean-forward="true" selection-start-line="110" selection-start-column="64" selection-end-line="110" selection-end-column="64" />
+            <state relative-caret-position="264">
+              <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -195,9 +197,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550663155100" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550663535884" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -263,7 +269,7 @@
       <workItem from="1550374205239" duration="2918000" />
       <workItem from="1550400973629" duration="2014000" />
       <workItem from="1550628188614" duration="351000" />
-      <workItem from="1550662312554" duration="814000" />
+      <workItem from="1550662312554" duration="1210000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -363,11 +369,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550663013019</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="补充HERO_TORNADO">
+      <created>1550663171005</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1550663171005</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35772000" />
+    <option name="totallyTimeSpent" value="36168000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -461,7 +474,8 @@
     <MESSAGE value="大修大补" />
     <MESSAGE value="修正查找最优路径函数" />
     <MESSAGE value="修正update map" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正update map" />
+    <MESSAGE value="补充HERO_TORNADO" />
+    <option name="LAST_COMMIT_MESSAGE" value="补充HERO_TORNADO" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/huawei/Pair.java" />
@@ -522,22 +536,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="110" column="64" lean-forward="true" selection-start-line="110" selection-start-column="64" selection-end-line="110" selection-end-column="64" />
+        <state relative-caret-position="264">
+          <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/MyElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        <state relative-caret-position="285">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="205" column="37" lean-forward="true" selection-start-line="205" selection-start-column="37" selection-end-line="205" selection-end-column="37" />
+        <state relative-caret-position="-19">
+          <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
