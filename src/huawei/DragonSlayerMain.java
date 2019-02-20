@@ -32,7 +32,7 @@ public class DragonSlayerMain
         Command cmd = new ExamCmd(new DragonSlayerImpl());
         ExamSocketServer ess = new ExamSocketServer(cmd);
         ess.start();*/
-    	
+    	JFrame jframe=new JFrame();
     	Scanner scanner=new Scanner(System.in);
     	DragonSlayerImpl test_map=new DragonSlayerImpl();
     	String order="start";
@@ -66,12 +66,15 @@ public class DragonSlayerMain
     		}else if(parts[0].matches("r")){
     			test_map.reset();
     		}
-    		drawMap(test_map.map);
+    		
+    		jframe.setVisible (false);
+    		jframe=drawMap(test_map.map);
+    		jframe.setVisible (true);
     	}
     	
     }
     
-    public static void drawMap(Map map){
+    public static JFrame drawMap(Map map){
     	JFrame jframe=new JFrame();
         GridLayout grid = new GridLayout (16, 16);
         JPanel map_draw = new JPanel ();
@@ -125,6 +128,6 @@ public class DragonSlayerMain
         jframe.add (map_draw, BorderLayout.CENTER);
         jframe.setBounds (10, 10, 650, 650);
         jframe.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        jframe.setVisible (true);
+        return jframe;
     }
 }
