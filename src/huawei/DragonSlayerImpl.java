@@ -538,20 +538,22 @@ public class DragonSlayerImpl implements ExamOp
 
 		int point_to_hero_lastest_position = 0;
 
-		if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_PORTAL_EXIT)
-		{
-			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.PORTAL_EXIT;
-		}
-		else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO)
-		{
-			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO;
-		}
-		else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
-		{
-			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO_PORTAL_EXIT;
-		}
-		else {
-			this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.NONE;
+		if(path_sequence_with_time[0][0] != 999){
+			if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_PORTAL_EXIT)
+			{
+				this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.PORTAL_EXIT;
+			}
+			else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO)
+			{
+				this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO;
+			}
+			else if(this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
+			{
+				this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.TORNADO_PORTAL_EXIT;
+			}
+			else {
+				this.map.table[path_sequence_with_time[0][0]][path_sequence_with_time[0][1]].element = MyElement.NONE;
+			}
 		}
 
 		for(int i =0; i<100;i++) {
@@ -597,8 +599,12 @@ public class DragonSlayerImpl implements ExamOp
     	int non_zero_row_index=0;
     	
 		int column3_cnt = sys_time;			
-	    if(path_sequence[1][0]==hero.getArea().getX() && path_sequence[1][1]==hero.getArea().getX()){
+	    /*if(path_sequence[1][0]==hero.getArea().getX() && path_sequence[1][1]==hero.getArea().getX()){
 	    	hero.setStatus(Status.WAITING);
+			sys_time = time;
+		}*/
+		if(path_sequence[0][0]==999 && path_sequence[0][1]==999){
+			hero.setStatus(Status.WAITING);
 			sys_time = time;
 		}
 	    else
