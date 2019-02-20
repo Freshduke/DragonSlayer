@@ -244,7 +244,7 @@ public class DragonSlayerImpl implements ExamOp
 		 if(length_p_tornado_access > length_p_tornado_inaccess ) {
 		 	p_tornado_access = p_tornado_inaccess;
 		 }
-		System.out.println("p_cmp_tornado");
+		System.out.println("figure out comparison between tornado_access and tornado_inaccess");
 		 return p_tornado_access;
 	}
 	
@@ -367,6 +367,11 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
+		//清空G
+		for(int i = 0;i<256;i++)
+		{
+			G[i].clear();
+		}
 
 
 		for (int i = 0; i<256;i++)
@@ -397,7 +402,7 @@ public class DragonSlayerImpl implements ExamOp
 				NodeNum++;
 			}
 		}
-
+		paths.clear();
 		return path_seq;
 	}
 
@@ -438,6 +443,13 @@ public class DragonSlayerImpl implements ExamOp
 
 	public static void dijkstra(int s,ArrayList<Edge>[] G)
 	{
+
+		// 清空G4
+
+		for(int i = 0;i<256;i++)
+		{
+			G4[i].clear();
+		}
 
 		//Vector dist = new Vector();
 		int [] dist = new int[256];
@@ -546,11 +558,8 @@ public class DragonSlayerImpl implements ExamOp
 	    else
 	    {
 			hero.setStatus(Status.MARCHING);
-			for(int i=0;i<2;i++) {
-				path_sequence_with_time[0][i] = path_sequence[0][i];
-			}
-			for(int i =1;i<100;i++){
-				if(path_sequence[i][1]!=999) {  //########################################################！！！！
+			for(int i =0;i<100;i++){
+				if(path_sequence[i][1]!=999) {
 					path_sequence_with_time[i][0] = path_sequence[i][0];
 					path_sequence_with_time[i][1] = path_sequence[i][1];
 					path_sequence_with_time[i][2] = column3_cnt;
