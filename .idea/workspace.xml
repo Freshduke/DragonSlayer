@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="123" column="9" lean-forward="true" selection-start-line="123" selection-start-column="9" selection-end-line="123" selection-end-column="9" />
+            <state relative-caret-position="703">
+              <caret line="667" column="9" selection-start-line="667" selection-start-column="9" selection-end-line="667" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,7 +112,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="658" />
+    <option name="x" value="671" />
     <option name="y" value="3" />
     <option name="width" value="1257" />
     <option name="height" value="1047" />
@@ -221,6 +222,7 @@
       <workItem from="1550400973629" duration="2014000" />
       <workItem from="1550628188614" duration="351000" />
       <workItem from="1550662312554" duration="2690000" />
+      <workItem from="1550666831680" duration="2242000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -345,7 +347,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37648000" />
+    <option name="totallyTimeSpent" value="39890000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -357,9 +359,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="658" y="3" width="1257" height="1047" extended-state="0" />
+    <frame x="671" y="3" width="1257" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" visible="true" weight="0.20133668" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" weight="0.20467836" />
       <window_info id="Structure" order="1" sideWeight="0.50448835" side_tool="true" weight="0.12846482" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -368,7 +371,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5065076" side_tool="true" weight="0.12686567" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33187294" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.10843374" />
       <window_info anchor="bottom" x="8" y="580" width="775" height="485" id="Debug" order="3" type="WINDOWED" weight="0.39978093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -379,7 +382,6 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3286334" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3286334" />
-      <window_info anchor="right" id="Coverage" sideWeight="0.5018248" side_tool="true" weight="0.39181286" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49817517" weight="0.39181286" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -389,6 +391,7 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" weight="0.32995737" />
+      <window_info anchor="right" id="Coverage" order="9" sideWeight="0.5018248" side_tool="true" weight="0.39181286" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,30 +415,6 @@
     <MESSAGE value="补充HERO_TORANDO_PORTAL_EXIT" />
     <MESSAGE value="修正999越界bug" />
     <option name="LAST_COMMIT_MESSAGE" value="修正999越界bug" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java</url>
-          <line>89</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java</url>
-          <line>140</line>
-          <properties />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java</url>
-          <line>142</line>
-          <properties />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -523,8 +502,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="123" column="9" lean-forward="true" selection-start-line="123" selection-start-column="9" selection-end-line="123" selection-end-column="9" />
+        <state relative-caret-position="703">
+          <caret line="667" column="9" selection-start-line="667" selection-start-column="9" selection-end-line="667" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

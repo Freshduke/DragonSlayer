@@ -175,7 +175,15 @@ public class DragonSlayerImpl implements ExamOp
 		int length_p_tornado_inaccess=0;
 		int tornado_x=99;
 		int tornado_y=99;
-		
+
+		for(int i= 0; i<16;i++)
+		{
+			for(int j =0;j<16;j++)
+			{
+				temp_map[i][j] = 0;
+			}
+		}
+
 		for(int i=0;i<16;i++) {
 			for(int j=0;j<16;j++) {
 				if(map.table[i][j].element == MyElement.FIRE) {
@@ -658,6 +666,15 @@ public class DragonSlayerImpl implements ExamOp
     	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
     	this.isTurnadoSet=false;
     	this.isPortalSet=false;
+
+		for(int i= 0; i<16;i++)
+		{
+			for(int j =0;j<16;j++)
+			{
+				temp_map[i][j] = 0;
+			}
+		}
+
        	return new OpResult(ReturnCode.S001);        
     }
     
