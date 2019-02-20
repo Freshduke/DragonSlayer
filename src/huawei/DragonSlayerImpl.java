@@ -188,19 +188,20 @@ public class DragonSlayerImpl implements ExamOp
 					tornado_x = i;
 					tornado_y = j;
 				}
-				else if(map.table[i][j].element == MyElement.HERO_PORTAL_EXIT) {
+				else if(map.table[i][j].element == MyElement.HERO_TORNADO) {
 					temp_map[i][j]=0;
 					tornado_x = i;
 					tornado_y = j;
+				}
+				else if(map.table[i][j].element == MyElement.HERO_PORTAL_EXIT) {
+					temp_map[i][j]=0;
 				}
 				else if(map.table[i][j].element == MyElement.PORTAL_EXIT) {
 					temp_map[i][j]=0;
-					tornado_x = i;
-					tornado_y = j;
 				}
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
 					temp_map[i][j]=1;	
-				}	
+				}
 				else if(map.table[i][j].element == MyElement.TORNADO) {
 					temp_map[i][j]=0;
 					tornado_x = i;
@@ -235,7 +236,7 @@ public class DragonSlayerImpl implements ExamOp
 					temp_map[i][j]=1;
 				}
 				else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
-					temp_map[i][j]=1;
+					temp_map[i][j] = 1;
 				}
 			}
 		 }
