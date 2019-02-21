@@ -598,6 +598,9 @@ public class DragonSlayerImpl implements ExamOp
 			else if(this.map.table[x_next][y_next].element == MyElement.HERO_TORNADO)
 			{
 				;
+			}else if(this.map.table[x_next][y_next].element == MyElement.DRAGON)
+			{
+				System.out.println("一刀999！");
 			}
 			else{
 				this.map.table[x_next][y_next].element = MyElement.HERO;
