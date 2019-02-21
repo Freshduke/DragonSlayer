@@ -228,7 +228,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		 }
 		 if(is_turnado_passed==true){
-			 length_p_tornado_access = detect_sequence_length(p_tornado_access)+3;
+			 length_p_tornado_access = detect_sequence_length(p_tornado_access)+2;
 			 for(int i=0;i<16;i++) {
 					for(int j=0;j<16;j++) {
 						if(map.table[i][j].element == MyElement.TORNADO) {
@@ -587,7 +587,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 			else if(this.map.table[x_next][y_next].element == MyElement.TORNADO)
 			{
-				this.in_turnado_count=0;
+				this.in_turnado_count=1;
 				this.map.table[x_next][y_next].element = MyElement.HERO_TORNADO;
 				//System.out.println(path_sequence_with_time[point_to_hero_lastest_position][0]+" "+path_sequence_with_time[point_to_hero_lastest_position][1]);
 			}
