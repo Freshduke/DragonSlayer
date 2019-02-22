@@ -208,6 +208,8 @@ public class DragonSlayerImpl implements ExamOp
 				}
 				else if(map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT) {
 					temp_map[i][j]=0;
+					tornado_x = i;
+					tornado_y = j;
 				}
 				else if(map.table[i][j].element == MyElement.TORNADO) {
 					temp_map[i][j]=0;
@@ -232,7 +234,7 @@ public class DragonSlayerImpl implements ExamOp
 			 for(int i=0;i<16;i++) {
 					for(int j=0;j<16;j++) {
 						if(map.table[i][j].element == MyElement.TORNADO) {
-							temp_map[i][j]=1;
+							temp_map[i][j] = 1;
 						}
 						else if(map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT) {
 							temp_map[i][j] = 1;
@@ -608,9 +610,6 @@ public class DragonSlayerImpl implements ExamOp
 		}else{
 			this.in_turnado_count++;
 		}
-			
-
-		
 
 
 		if(hero.getArea().getX() == 15 && hero.getArea().getY()==15)
