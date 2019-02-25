@@ -4,7 +4,7 @@ import huawei.exam.*;
 
 /**
  * 实现类
- * 
+ *
  * 各方法请按要求返回，考试框架负责报文输出
  */
 public class DragonSlayerImpl implements ExamOp
@@ -14,57 +14,56 @@ public class DragonSlayerImpl implements ExamOp
      * .E002：非法坐标 .E003：非法时间 .E004：操作时间不能小于系统时间 .E005：该区域不能设置元素 .E006：龙卷风数量已达上限
      * .E007：传送阵数量已达上限 .E008：传送阵的入口和出口重叠
      */
-    
+
     /**
      * Area(区域类) int getX()：获取横坐标 void setX(int x)：设置横坐标 int getY()：获取纵坐标 void setY(int
      * y)：设置纵坐标 Element getElement()：获取元素 void setElement(Element element)：设置元素 boolean
      * equals(Object o)：区域横纵坐标相同，则区域相同
      */
-    
+
     /**
      * Element(元素枚举) .NONE：空元素 .HERO：英雄 .DRAGON：恶龙 .FIRE：火焰 .TORNADO：龙卷风 .PORTAL：传送阵
      */
-    
+
     /**
      * Hero(英雄类) Title getTitle()：获取称号 void setTitle(Title title)：设置称号 Status
      * getStatus()：获取状态 void setStatus(Status status)：设置状态 Area getArea()：获取区域
      * setArea(Area area)：设置区域
      */
-    
+
     /**
      * Title(称号枚举) .WARRIOR：勇士 .DRAGON_SLAYER：屠龙者
      */
-    
+
     /**
      * Status(状态枚举) .MARCHING：行进 .WAITING：等待
      */
 
-    
+
     /**
      * 待考生实现，构造函数
      */
-	public static Map map;
-	private int sys_time;
-	private boolean isTurnadoSet;
-	private boolean isPortalSet;
-	private Hero hero;
-	private char in_turnado_count=3;
-	private int[][] path_sequence=new int[200][2];
+	public static Map map;       //定义地图
+	private int sys_time;        //定义系统时间 指令更新
+	private boolean istornadoSet;  //定义判断是否设置龙卷风的变量
+	private boolean isPortalSet;  //定义判断是否设置龙卷风的变量
+	private Hero hero;  //定义英雄
+	private char in_tornado_count=3;  //记录龙卷风中的等待时间
+	private int[][] path_sequence=new int[200][2];           //英雄最短路径
 	private int[][] path_sequence_with_time=new int[200][3];     //最优英雄位置序列。
-	private static int[][] temp_map = new int[16][16];
+	private static int[][] temp_map = new int[16][16];              //游戏网格
 	private static ArrayList<Edge> G4[] = new ArrayList[256];
 	private static ArrayList<Edge> G[] = new ArrayList[256];
-	private static int[][] Gmat = new int[256][256]; //注意这里面使用999来代表无穷大。
+	private static int[][] Gmat = new int[256][256];   //注意这里面使用999来代表无穷大。
 	private static boolean[] vis = new boolean[256];
 	private static ArrayList<P> q = new ArrayList<P>();
-	private static ArrayList<Ans> paths = new ArrayList<Ans>();
+	private static ArrayList<Ans> paths = new ArrayList<Ans>();   //路径序列集合
 
-			//比较不同case下的总路径长度，并且将最优路径赋值到path_sequence中。
+	//比较不同情况下的总路径长度 并且将最优路径赋值到path_sequence
 	public void ComparePath(){
 		for(int i=0;i<256;i++){
 			G[i]=new ArrayList<Edge>();
 			G4[i]=new ArrayList<Edge>();
-			//System.out.print("\t"+i);
 		}
 		int[][] p_no_portal = new int[200][2];          //不经过传送门的最优路径
 		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
@@ -72,29 +71,29 @@ public class DragonSlayerImpl implements ExamOp
 		int length_p_portal_entran=50;                  //以传送门入口为终点的最优路径的序列长度
 		int[][] p_portal_exit = new int[200][2];        //以传送门出口为起点的最优路径
 		int length_p_portal_exit=200;                   //以传送门出口为起点的最优路径的序列长度
-		int portal_entrance_x=0;
-		int portal_entrance_y=0;
-		int portal_exit_x=20;
-		int portal_exit_y=20;
-		int FIRE_PORTAL_EXIT_x=20;
-		int FIRE_PORTAL_EXIT_y=20;
+		int portal_entrance_x=0;                        //传送门入口x坐标
+		int portal_entrance_y=0;                        //传送门入口y坐标
+		int portal_exit_x=20;                           //传送门出口x坐标
+		int portal_exit_y=20;                           //传送门出口y坐标
+		int FIRE_PORTAL_EXIT_x=20;                      //为火焰的传送门出口x坐标
+		int FIRE_PORTAL_EXIT_y=20;                      //为火焰的传送门出口y坐标
 
 
+		//初始化最优路径序列
 		for(int i=0 ; i<200; i++)
 		{
 			path_sequence[i][0] = 999;
 			path_sequence[i][1] = 999;
 		}
-		
+
 	    // 不经过传送门可以经过龙卷风的最优路径。
 		p_no_portal = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , 15 , 15 ,1);
 		length_p_no_portal = detect_sequence_length(p_no_portal);
-		System.out.println("figure out p_no_portal");
 
 		//判断地图中有无传送门，若没有传送门（出口值不更新）or 传送门出口处有火焰则无需计算经过传送门的最优路径。
 		for(int i = 0; i< 16;i++)
 		{
-			for(int j =0 ;j < 16;j++) 
+			for(int j =0 ;j < 16;j++)
 			{
 				if(map.table[i][j].element == MyElement.PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_PORTAL_EXIT  || map.table[i][j].element == MyElement.TORNADO_PORTAL_EXIT || map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT)
 				{
@@ -106,9 +105,9 @@ public class DragonSlayerImpl implements ExamOp
 		}
 		for(int i = 0; i< 16;i++)
 		{
-			for(int j =0 ;j < 16;j++) 
+			for(int j =0 ;j < 16;j++)
 			{
-				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT)			
+				if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT)
 				{
 					FIRE_PORTAL_EXIT_x = i;
 					FIRE_PORTAL_EXIT_y = j;
@@ -119,12 +118,10 @@ public class DragonSlayerImpl implements ExamOp
 
 
 
-		
-		
 		if((FIRE_PORTAL_EXIT_x !=20)||(portal_exit_x ==20)) {
 			path_sequence = p_no_portal;
 		}
-		else 
+		else
 		{
 			//计算经过传送门的最优路径
 			for(int i = 0; i< 16;i++)
@@ -141,17 +138,17 @@ public class DragonSlayerImpl implements ExamOp
 			}
 
 			p_portal_entran = p_cmp_tornado(hero.getArea().getX(), hero.getArea().getY() , portal_entrance_x , portal_entrance_y , 0);
-			
 			p_portal_exit   = p_cmp_tornado(portal_exit_x,portal_exit_y ,15 , 15 , 1);
-			
 			length_p_portal_entran = detect_sequence_length(p_portal_entran);
 			length_p_portal_exit   = detect_sequence_length(p_portal_exit);
 
+
+			//判断英雄是否需要使用传送门作为中继来缩短路径
 			if((length_p_portal_exit+length_p_portal_entran) > length_p_no_portal)
 			{
 				path_sequence =p_no_portal;
 			}
-			else 
+			else
 			{
 				int k=0;
 				for(int i=1; i< 200; i++) {
@@ -163,21 +160,21 @@ public class DragonSlayerImpl implements ExamOp
 					}
 				}
 				path_sequence =p_portal_entran;
-				System.out.println("figure out p_portal");
 			}
 		}
 	}
-	
-	
+
+
 	// 对比经过或不经过龙卷风下的最优路径长度，返回最优路径序列
 	public static int[][] p_cmp_tornado(int depart_x,int depart_y,int destin_x, int destin_y,int status_portal_entran){
-		int[][] p_tornado_access = new int[200][2];
-		int[][] p_tornado_inaccess = new int[200][2];
-		int length_p_tornado_access=0;
-		int length_p_tornado_inaccess=0;
-		int tornado_x=99;
-		int tornado_y=99;
-		boolean is_turnado_passed=false;
+		int[][] p_tornado_access = new int[200][2];    //记录龙卷风可达时的最短路径序列
+		int[][] p_tornado_inaccess = new int[200][2];  //记录龙卷风不可达时的最短路径序列
+		int length_p_tornado_access=0;                 //记录龙卷风可达时的最短路径序列长度
+		int length_p_tornado_inaccess=0;               //记录龙卷风不可达时的最短路径序列长度
+		int tornado_x=99;                             //龙卷风的x坐标
+		int tornado_y=99;                             //龙卷风的x坐标
+		boolean is_tornado_passed=false;              //标记是否经过龙卷风
+
 		//build temp_map
 		for(int i=0;i<16;i++) {
 			for(int j=0;j<16;j++) {
@@ -204,7 +201,7 @@ public class DragonSlayerImpl implements ExamOp
 					temp_map[i][j]=0;
 				}
 				else if(map.table[i][j].element == MyElement.FIRE_PORTAL_EXIT) {
-					temp_map[i][j]=1;	
+					temp_map[i][j]=1;
 				}
 				else if(map.table[i][j].element == MyElement.HERO_TORNADO_PORTAL_EXIT) {
 					temp_map[i][j]=0;
@@ -218,16 +215,18 @@ public class DragonSlayerImpl implements ExamOp
 				}
 			}
 		 }
-		//龙卷风可达
-		 p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y);
 
+		//龙卷风可达时
+		 p_tornado_access = findpath(depart_x,depart_y,destin_x,destin_y); //寻找最优路径
+        //记录龙卷风可达时的路径
 		 for(int i=0; i<99;i++) {
 			if(p_tornado_access[i][0] == tornado_x && p_tornado_access[i][1] == tornado_y) {
-				is_turnado_passed=true;
+				is_tornado_passed=true;
 				break;
 			}
 		 }
-		 if(is_turnado_passed==true){
+
+		 if(is_tornado_passed==true){
 			 length_p_tornado_access = detect_sequence_length(p_tornado_access)+2;
 			 for(int i=0;i<16;i++) {
 					for(int j=0;j<16;j++) {
@@ -241,52 +240,46 @@ public class DragonSlayerImpl implements ExamOp
 			 }
 				 p_tornado_inaccess = findpath(depart_x,depart_y,destin_x,destin_y);
 				 length_p_tornado_inaccess =detect_sequence_length(p_tornado_inaccess) ;
-				 System.out.println(length_p_tornado_access+" "+length_p_tornado_inaccess);
+
+				 //比较龙卷风可达和不可达的路经长，返回最优
 				 if(length_p_tornado_access > length_p_tornado_inaccess ) {
 				 	p_tornado_access = p_tornado_inaccess;
 				 }
 		 }
-		 
-		
+
+
 		 //龙卷风不可达
-		 
-		System.out.println("figure out comparison between tornado_access and tornado_inaccess");
 		 return p_tornado_access;
 	}
-	
-	
-	
+
+
+
 	//检测最优路径序列长度，返回长度
 	public static int detect_sequence_length(int[][] array) {
 		int k;
 		if(array[0][1]== 999 && array[0][0]== 999)
 		{
-			return array[99][0];
+			return array[99][0];     //返回可达的多条路径的长度
 		}
 		for(k =1; k<200;k++) {
 			if(array[k][1]== 999 && array[k][0]== 999) {
-				return k;
+				return k;            //返回可达唯一路径长度
 			}
 		}
 		return 200;
 	}
 
 
-
-	
-	
-	
-	
-	
-	
-	
-	
+    //寻找两点间的最优路径
 	public static int[][] findpath(int depart_x, int depart_y, int destin_x, int destin_y){
 
+
+		//中间标志矩阵
 		for(int i = 0; i<256; i++){
 			vis[i] = false;
 		}
 
+		//初始化最短路径序列数组
 		int[][] path_seq = new int[200][2];
 		for(int i= 0; i< 200 ; i++)
 		{
@@ -294,6 +287,7 @@ public class DragonSlayerImpl implements ExamOp
 			path_seq[i][1]=999;
 		}
 
+		//初始化地图
 		for(int i=0;i<256;i++)
 			for(int j=i;j<256;j++)
 			{
@@ -302,6 +296,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 
 
+		//将16*16的方格转化为256个点的邻接矩阵
 		for(int i=0;i<16;i++)
 		{
 			for(int j=0;j<16;j++)
@@ -361,7 +356,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
-		
+
 		//清空G
 		for(int i = 0;i<256;i++)
 		{
@@ -385,6 +380,8 @@ public class DragonSlayerImpl implements ExamOp
 
 		Ans ans = new Ans();
 		dfs(depart_x*16+depart_y, destin_x*16+destin_y, ans, depart_x*16+depart_y);
+
+		//返回唯一最短路径
 		if(paths.size()==1)
 		{
 			int NodeNum=1;
@@ -409,6 +406,7 @@ public class DragonSlayerImpl implements ExamOp
 	}
 
 
+	//dfs寻找最短路径
 	public static void dfs(int s, int t, Ans A,  int start)
 	{
 		if(paths.size()>=2){
@@ -416,9 +414,6 @@ public class DragonSlayerImpl implements ExamOp
 		}
 		if (s == t)
 		{
-
-			System.out.println("Find Optimistic path");
-
 			A.start = start;
 			A.getCost(Gmat);
 			Ans A2 = new Ans();
@@ -448,11 +443,7 @@ public class DragonSlayerImpl implements ExamOp
 	}
 
 
-
-	
-	
-	
-	
+	//基于dijkstra算法，寻找各点间的最短路径
 	public static void dijkstra(int s)
 	{
 
@@ -481,7 +472,7 @@ public class DragonSlayerImpl implements ExamOp
 		}
 		while(condition_if)
 		{
-			P p = q.get(0);   //浠庡皻鏈娇鐢ㄧ殑椤剁偣涓壘鍒颁竴涓窛绂绘渶灏忕殑椤剁偣
+			P p = q.get(0);   //从尚未使用的顶点中找到一个距离最小的顶点
 			q.remove(0);
 			sortingQueue();
 			int v = p.second;
@@ -512,12 +503,8 @@ public class DragonSlayerImpl implements ExamOp
 		}
 	}
 
-	
-	
-	
-	
-	
-	
+
+	//将优先队列按从小到大进行排序
 	public static void sortingQueue() {
 		for (int i=0;i< q.size();i++ )
 		{
@@ -543,29 +530,31 @@ public class DragonSlayerImpl implements ExamOp
 			});
 		}
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	//更新英雄称号&行进状态
 	public void updateHero(){
-		/*for(int i=0;i<99;i++){
-			System.out.println(path_sequence_with_time[i][0]+" "+path_sequence_with_time[i][1]+" "+path_sequence_with_time[i][2]);
-		}*/
-		int x_before=0;
-		int y_before=0;
-		int x_next=0;
-		int y_next=0;
-		int i=0;		
-		for(i =0; i<200;i++) {//get the original hero_x_y
+
+		int x_before=0;   //记录英雄上一时刻的x坐标
+		int y_before=0;   //记录英雄上一时刻的y坐标
+		int x_next=0;     //记录英雄下一时刻的x坐标
+		int y_next=0;     //记录英雄下一时刻的y坐标
+		int i=0;
+
+		//求取英雄上一时刻的坐标
+		for(i =0; i<200;i++) {
 			if(path_sequence_with_time[i][2]==sys_time) {
 				x_before=path_sequence_with_time[i][0];
 				y_before=path_sequence_with_time[i][1];
 				break;
 			}
 		}
-		if(this.in_turnado_count==3){
+
+		//对英雄可能的状态进行判断 更新其位置
+		if(this.in_tornado_count==3){
 			x_next=path_sequence_with_time[i+1][0];
 			y_next=path_sequence_with_time[i+1][1];
 			if(this.map.table[x_before][y_before].element == MyElement.HERO_PORTAL_EXIT)
@@ -583,19 +572,18 @@ public class DragonSlayerImpl implements ExamOp
 			else {
 				this.map.table[x_before][y_before].element = MyElement.NONE;
 			}
-			
+
 			hero.setArea(new Area(x_next,y_next));
-			
-			
+
+
 			if(this.map.table[x_next][y_next].element == MyElement.PORTAL_EXIT)
 			{
 				this.map.table[x_next][y_next].element = MyElement.HERO_PORTAL_EXIT;
 			}
 			else if((this.map.table[x_next][y_next].element == MyElement.TORNADO)||(this.map.table[x_next][y_next].element == MyElement.TORNADO_PORTAL_EXIT))
 			{
-				this.in_turnado_count=1;
+				this.in_tornado_count=1;
 				this.map.table[x_next][y_next].element = MyElement.HERO_TORNADO;
-				//System.out.println(path_sequence_with_time[point_to_hero_lastest_position][0]+" "+path_sequence_with_time[point_to_hero_lastest_position][1]);
 			}
 			else if(this.map.table[x_next][y_next].element == MyElement.TORNADO_PORTAL_EXIT)
 			{
@@ -605,57 +593,51 @@ public class DragonSlayerImpl implements ExamOp
 			{
 				;
 			}else if(this.map.table[x_next][y_next].element == MyElement.DRAGON)
-			{
-				System.out.println("一刀999！");
-			}
+			 ;
 			else{
 				this.map.table[x_next][y_next].element = MyElement.HERO;
 			}
 		}else{
-				this.in_turnado_count++;
-			
+				this.in_tornado_count++;
+
 		}
-			
 
-		
-
-
+        //判断游戏是否结束 更新英雄的称号
 		if(hero.getArea().getX() == 15 && hero.getArea().getY()==15)
 		{
 			hero.setTitle(Title.DRAGON_SLAYER);
 		}
 
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	//更新系统时间&英雄位置&称号&行进状态总函数。
     public void update(int time)
     {
-    	ComparePath();
-		System.out.println("Complete comparison");
+    	ComparePath();  //更新最优路径
 
     	int non_zero_row_index=0;
-    	
-		int column3_cnt = sys_time;			
-	    /*if(path_sequence[1][0]==hero.getArea().getX() && path_sequence[1][1]==hero.getArea().getX()){
-	    	hero.setStatus(Status.WAITING);
-			sys_time = time;
-		}*/
-		if(path_sequence[0][0]==999 && path_sequence[0][1]==999){
+
+		int column3_cnt = sys_time;
+
+
+		if(path_sequence[0][0]==999 && path_sequence[0][1]==999){//无唯一最短路径时
 			hero.setStatus(Status.WAITING);
 			int hero_x=this.hero.getArea().getX();
 			int hero_y=this.hero.getArea().getY();
 			if((this.map.table[hero_x][hero_y].element==MyElement.HERO_TORNADO)||(this.map.table[hero_x][hero_y].element==MyElement.HERO_TORNADO_PORTAL_EXIT)){
-				this.in_turnado_count=1;
+				this.in_tornado_count=1;
 			}
 		}
-	    else
+	    else //存在最短路径时
 	    {
-			hero.setStatus(Status.MARCHING);
+			hero.setStatus(Status.MARCHING);  //更新行进状态
+
+			//随时间更新最短路径序列
 			for(int i =0;i<200;i++){
 				if(path_sequence[i][1]!=999) {
 					path_sequence_with_time[i][0] = path_sequence[i][0];
@@ -671,13 +653,13 @@ public class DragonSlayerImpl implements ExamOp
 				}
 				column3_cnt++;
 			}
+
+			//判断是否需要更新英雄各种状态
 			int delta_time=time-this.sys_time;
 			for(int j=0;j<delta_time;j++){
 				updateHero();
 				this.sys_time++;
 			}
-	    	//update title and state
-			System.out.println("update title and state");
 	    }
 		this.sys_time=time;
     }
@@ -688,29 +670,29 @@ public class DragonSlayerImpl implements ExamOp
     	this.map=new Map();
     	this.sys_time=0;
     	this.isPortalSet=false;
-    	this.isTurnadoSet=false;
-    	this.in_turnado_count=3;
+    	this.istornadoSet=false;
+    	this.in_tornado_count=3;
     	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
-    	this.isTurnadoSet=false;
+    	this.istornadoSet=false;
     	this.isPortalSet=false;
     }
-    
+
     /**
      * 待考生实现，系统重置
-     * 
+     *
      * @return 返回码
      */
     @Override
-    public OpResult reset()
+    public OpResult reset() //重置游戏
     {
     	this.map=new Map();
     	this.sys_time=0;
     	this.isPortalSet=false;
-    	this.isTurnadoSet=false;
+    	this.istornadoSet=false;
     	this.hero=new Hero(Title.WARRIOR,Status.MARCHING,new Area(0,0));
-    	this.isTurnadoSet=false;
+    	this.istornadoSet=false;
     	this.isPortalSet=false;
-    	this.in_turnado_count=3;
+    	this.in_tornado_count=3;
     	for(int i= 0; i<16;i++)
 		{
 			for(int j =0;j<16;j++)
@@ -719,20 +701,20 @@ public class DragonSlayerImpl implements ExamOp
 			}
 		}
 
-    	
-       	return new OpResult(ReturnCode.S001);        
+
+       	return new OpResult(ReturnCode.S001);
     }
-    
+
     /**
      * 待考生实现，设置火焰
-     * 
+     *
      * @param area 设置区域
      * @param time 设置时间
      * @return 返回码
      */
     @Override
-    public OpResult setFire(Area area, int time)
-    {    	
+    public OpResult setFire(Area area, int time)   //设置火焰
+    {
     	if(sys_time<=time)
     	{
 			if(this.hero.getTitle()==Title.WARRIOR){
@@ -745,35 +727,30 @@ public class DragonSlayerImpl implements ExamOp
     		if(flag==1)
     		{
     			this.map.setMap(x, y, MyElement.FIRE);
-				System.out.println("Fire set at ("+x+","+y+")");
     			return new OpResult(ReturnCode.S002);
     		}else if(flag==2){
     			this.map.setMap(x, y, MyElement.FIRE_PORTAL_EXIT);
-				System.out.println("Fire set at ("+x+","+y+")");
     			return new OpResult(ReturnCode.S002);
     		}else{
-				System.out.println("Collision! SF failed!");
     			return new OpResult(ReturnCode.E005);
     		}
     	}
     	else{
-			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
-    	 // return new OpResult(ReturnCode.E001);
     }
-    
-    
+
+
     /**
      * 待考生实现，设置龙卷风
-     * 
+     *
      * @param area 设置区域
      * @param time 设置时间
      * @return 返回码
      */
     @Override
-    public OpResult setTornado(Area area, int time)
-    {	
+    public OpResult setTornado(Area area, int time)  //设置龙卷风
+    {
     	if(sys_time<=time)
     	{
 			if(this.hero.getTitle()==Title.WARRIOR){
@@ -785,12 +762,10 @@ public class DragonSlayerImpl implements ExamOp
         	char flag=isCollision(x,y);
     		if(flag==0)
     		{
-				System.out.println("ERROR:Collision! ST failed!");
     			return new OpResult(ReturnCode.E005);
-    			
+
     		}else{
-    			if(this.isTurnadoSet){
-					System.out.println("ERROR:Turnado has been set before!");
+    			if(this.istornadoSet){
     				return new OpResult(ReturnCode.E006);
     			}else{
     				if(flag==1)
@@ -799,28 +774,25 @@ public class DragonSlayerImpl implements ExamOp
     	    		}else if(flag==2){
     	    			this.map.setMap(x, y, MyElement.TORNADO_PORTAL_EXIT);
     	    		}
-					System.out.println("Turnado set at ("+x+","+y+")");
-    				this.isTurnadoSet=true;
+    				this.istornadoSet=true;
 	    			return new OpResult(ReturnCode.S002);
     			}
     		}
     	}else{
-			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
-    	 // return new OpResult(ReturnCode.E001);
     }
-    
+
     /**
      * 待考生实现，设置传送阵
-     * 
+     *
      * @param entry 入口区域
      * @param exit 出口区域
      * @param time 设置时间
      * @return 返回码
      */
     @Override
-    public OpResult setPortal(Area entry, Area exit, int time)
+    public OpResult setPortal(Area entry, Area exit, int time)  //设置传送门
     {
     	if(sys_time<=time)
     	{
@@ -836,40 +808,33 @@ public class DragonSlayerImpl implements ExamOp
         	char flag=isCollision(entry_x,entry_y,exit_x,exit_y);
     		if(flag==0)
     		{
-				System.out.println("ERROR:Collision! SP failed!");
-    			return new OpResult(ReturnCode.E005);    			
+    			return new OpResult(ReturnCode.E005);
     		}else{
     			if(this.isPortalSet){
-					System.out.println("ERROR:Portal has been set before!");
     				return new OpResult(ReturnCode.E007);
     			}else{
     				if(flag==3){
-						System.out.println("ERROR:The entrance should be different to the exit!");
     					return new OpResult(ReturnCode.E008);
     				}else{
         	    		this.map.setMap(entry_x, entry_y, MyElement.PORTAL_ENTRANCE);
         	    		this.map.setMap(exit_x, exit_y, MyElement.PORTAL_EXIT);
-						System.out.println("Portal_entry set at ("+entry_x+","+entry_y+")");
-        	    		System.out.println("Portal_exit set at ("+exit_x+","+exit_y+")");
     	    			return new OpResult(ReturnCode.S002);
     				}
     			}
     		}
     	}else{
-			System.out.println("Time ERROR!");
     		return new OpResult(ReturnCode.E004);
     	}
-      //  return new OpResult(ReturnCode.E001);
     }
-    
+
     /**
      * 待考生实现，查询
-     * 
+     *
      * @param time 查询时间
      * @return 英雄信息
      */
     @Override
-    public OpResult query(int time)
+    public OpResult query(int time)  //查询操作
     {
         if(time>=this.sys_time)
     	{
@@ -878,17 +843,16 @@ public class DragonSlayerImpl implements ExamOp
 					update(time);
 				}
     		}
-			System.out.println(this.hero.getTitle()+" "+this.hero.getStatus()+" at("+this.hero.getArea().getX()+","+this.hero.getArea().getY()+")");
     		return new OpResult(this.hero);
     	}else{
-			System.out.println("Time ERROR!");
-    		return new OpResult(ReturnCode.E004);	
+    		return new OpResult(ReturnCode.E004);
     	}
     }
-    
+
+    //用于判断设置元素时的冲突（一个坐标）
     public char isCollision(int x,int y)
     {
-    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:OTHERS
+    	char flag=1;  //    1:NONE 2:PORTAL_EXIT 3:OTHERS
     	if(this.map.table[x][y].element==MyElement.NONE)
     	{
     		flag=1;
@@ -899,9 +863,10 @@ public class DragonSlayerImpl implements ExamOp
     	}
     	return flag;
     }
-    
+
+    //用于判断设置元素时的冲突（两个坐标）
     public char isCollision(int entry_x,int entry_y,int exit_x, int exit_y){
-    	char flag=1;// 1:NONE 2:PORTAL_EXIT 3:entry is the same as exit 0:OTHERS
+    	char flag=1;//flag 取值意义为  1:NONE 2:PORTAL_EXIT 3:entry is the same as exit 0:OTHERS
     	if((this.map.table[entry_x][entry_y].element==MyElement.NONE)&&(this.map.table[exit_x][exit_y].element==MyElement.NONE))
     	{
     		flag=1;
