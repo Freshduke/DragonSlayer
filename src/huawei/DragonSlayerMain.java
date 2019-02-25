@@ -7,7 +7,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Label;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -18,7 +22,7 @@ import com.huawei.exam.ExamSocketServer;
 
 /**
  * 主执行类
- * 
+ *
  * 考生不得修改，亦无须关注
  */
 public class DragonSlayerMain
@@ -27,56 +31,72 @@ public class DragonSlayerMain
         /**
          * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
          * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
-         
-        
+
+
         Command cmd = new ExamCmd(new DragonSlayerImpl());
         ExamSocketServer ess = new ExamSocketServer(cmd);
         ess.start();*/
-        File file = new File("D:\\work\\Github\\TetrisMania\\testcase.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file));
-    	JFrame jframe=new JFrame();
-    	Scanner scanner=new Scanner(System.in);
-    	DragonSlayerImpl test_map=new DragonSlayerImpl();
-    	String order="start";
-    	while(order!=null){
-    		order=br.readLine();
-    		String[] parts=order.split(" ");   		
-    		if(parts[0].matches("sf")){
-    			int x,y,t;
-    			x=Integer.valueOf(parts[1]);
-    			y=Integer.valueOf(parts[2]);
-    			t=Integer.valueOf(parts[3]);
-    			test_map.setFire(new Area(x,y),t);
-    		}else if(parts[0].matches("st")){
-    			int x,y,t;
-    			x=Integer.valueOf(parts[1]);
-    			y=Integer.valueOf(parts[2]);
-    			t=Integer.valueOf(parts[3]);
-    			test_map.setTornado(new Area(x,y),t);
-    		}else if(parts[0].matches("sp")){
-    			int x1,y1,x2,y2,t;
-    			x1=Integer.valueOf(parts[1]);
-    			y1=Integer.valueOf(parts[2]);
-    			x2=Integer.valueOf(parts[3]);
-    			y2=Integer.valueOf(parts[4]);
-    			t=Integer.valueOf(parts[5]);
-    			test_map.setPortal(new Area(x1,y1), new Area(x2,y2), t);
-    		}else if(parts[0].matches("q")){
-    			int t;
-    			t=Integer.valueOf(parts[1]);
-    			test_map.query(t);
-    		}else if(parts[0].matches("r")) {
-				test_map.reset();
-			}
-    	}
-		jframe.setVisible (false);
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jframe=drawMap(test_map.map);
-		jframe.setVisible (true);
+    	File file = new File("testcase.txt");
+    	try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			JFrame jframe=new JFrame();
+	    	Scanner scanner=new Scanner(System.in);
+	    	DragonSlayerImpl test_map=new DragonSlayerImpl();
+	    	String order="start";
+	    	//while(order.matches("ends")==false){
+	    	while(order!=null){
+	    		try {
+					order=br.readLine();
+					if(order==null){
+						test_map.query(150);
+						break;
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		String[] parts=order.split(" ");
+	    		if(parts[0].matches("sf")){
+	    			int x,y,t;
+	    			x=Integer.valueOf(parts[1]);
+	    			y=Integer.valueOf(parts[2]);
+	    			t=Integer.valueOf(parts[3]);
+	    			test_map.setFire(new Area(x,y),t);
+	    		}else if(parts[0].matches("st")){
+	    			int x,y,t;
+	    			x=Integer.valueOf(parts[1]);
+	    			y=Integer.valueOf(parts[2]);
+	    			t=Integer.valueOf(parts[3]);
+	    			test_map.setTornado(new Area(x,y),t);
+	    		}else if(parts[0].matches("sp")){
+	    			int x1,y1,x2,y2,t;
+	    			x1=Integer.valueOf(parts[1]);
+	    			y1=Integer.valueOf(parts[2]);
+	    			x2=Integer.valueOf(parts[3]);
+	    			y2=Integer.valueOf(parts[4]);
+	    			t=Integer.valueOf(parts[5]);
+	    			test_map.setPortal(new Area(x1,y1), new Area(x2,y2), t);
+	    		}else if(parts[0].matches("q")){
+	    			int t;
+	    			t=Integer.valueOf(parts[1]);
+	    			test_map.query(t);
+	    		}else if(parts[0].matches("r")){
+	    			test_map.reset();
+	    		}
 
-		scanner.close();
+	    	}
+	    	jframe.setVisible (false);
+    		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    		jframe=drawMap(test_map.map);
+    		jframe.setVisible (true);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
     }
-    
+
     public static JFrame drawMap(Map map){
     	JFrame jframe=new JFrame();
         GridLayout grid = new GridLayout (16, 16);
@@ -118,7 +138,7 @@ public class DragonSlayerMain
                 }else if(map.table[i][j].element==MyElement.HERO_TORNADO_PORTAL_EXIT){
                 	label[i][j].setBackground (Color.DARK_GRAY);
                 }
-                
+
             }
         }
         for ( int i = 0; i < label.length; i++ )
