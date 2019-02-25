@@ -28,15 +28,17 @@ import com.huawei.exam.ExamSocketServer;
 public class DragonSlayerMain
 {
     public static void main(String[] args) throws IOException {
-        /**
-         * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
-         * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
+		/**
+		 * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
+		 * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
+		 **/
 
-
-        Command cmd = new ExamCmd(new DragonSlayerImpl());
-        ExamSocketServer ess = new ExamSocketServer(cmd);
-        ess.start();*/
-    	File file = new File("testcase.txt");
+		Command cmd = new ExamCmd(new DragonSlayerImpl());
+		ExamSocketServer ess = new ExamSocketServer(cmd);
+		ess.start();
+	}
+		// 以下为我们的测试用例
+    	/*File file = new File("D:\\work\\Github\\TetrisMania\\testcase.txt");
     	try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			JFrame jframe=new JFrame();
@@ -152,5 +154,6 @@ public class DragonSlayerMain
         jframe.setBounds (10, 10, 650, 650);
         jframe.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         return jframe;
-    }
+    }*/
+
 }
