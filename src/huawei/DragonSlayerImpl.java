@@ -49,8 +49,8 @@ public class DragonSlayerImpl implements ExamOp
 	private boolean isPortalSet;
 	private Hero hero;
 	private char in_turnado_count=3;
-	private int[][] path_sequence=new int[100][2];
-	private int[][] path_sequence_with_time=new int[100][3];     //最优英雄位置序列。
+	private int[][] path_sequence=new int[200][2];
+	private int[][] path_sequence_with_time=new int[200][3];     //最优英雄位置序列。
 	private static int[][] temp_map = new int[16][16];
 	private static ArrayList<Edge> G4[] = new ArrayList[256];
 	private static ArrayList<Edge> G[] = new ArrayList[256];
@@ -66,12 +66,12 @@ public class DragonSlayerImpl implements ExamOp
 			G4[i]=new ArrayList<Edge>();
 			//System.out.print("\t"+i);
 		}
-		int[][] p_no_portal = new int[100][2];          //不经过传送门的最优路径
+		int[][] p_no_portal = new int[200][2];          //不经过传送门的最优路径
 		int length_p_no_portal=50;                      //不经过传送门的最优路径的序列长度
-		int[][] p_portal_entran = new int[100][2];      //以传送门入口为终点的最优路径
+		int[][] p_portal_entran = new int[200][2];      //以传送门入口为终点的最优路径
 		int length_p_portal_entran=50;                  //以传送门入口为终点的最优路径的序列长度
-		int[][] p_portal_exit = new int[100][2];        //以传送门出口为起点的最优路径
-		int length_p_portal_exit=100;                   //以传送门出口为起点的最优路径的序列长度
+		int[][] p_portal_exit = new int[200][2];        //以传送门出口为起点的最优路径
+		int length_p_portal_exit=200;                   //以传送门出口为起点的最优路径的序列长度
 		int portal_entrance_x=0;
 		int portal_entrance_y=0;
 		int portal_exit_x=20;
@@ -80,7 +80,7 @@ public class DragonSlayerImpl implements ExamOp
 		int FIRE_PORTAL_EXIT_y=20;
 
 
-		for(int i=0 ; i<100; i++)
+		for(int i=0 ; i<200; i++)
 		{
 			path_sequence[i][0] = 999;
 			path_sequence[i][1] = 999;
@@ -154,7 +154,7 @@ public class DragonSlayerImpl implements ExamOp
 			else 
 			{
 				int k=0;
-				for(int i=1; i< 100; i++) {
+				for(int i=1; i< 200; i++) {
 					if(p_portal_entran[i][0] == 999)
 					{
 						p_portal_entran[i-1][0] = p_portal_exit[k][0];
@@ -171,8 +171,8 @@ public class DragonSlayerImpl implements ExamOp
 	
 	// 对比经过或不经过龙卷风下的最优路径长度，返回最优路径序列
 	public static int[][] p_cmp_tornado(int depart_x,int depart_y,int destin_x, int destin_y,int status_portal_entran){
-		int[][] p_tornado_access = new int[100][2];
-		int[][] p_tornado_inaccess = new int[100][2];
+		int[][] p_tornado_access = new int[200][2];
+		int[][] p_tornado_inaccess = new int[200][2];
 		int length_p_tornado_access=0;
 		int length_p_tornado_inaccess=0;
 		int tornado_x=99;
@@ -263,12 +263,12 @@ public class DragonSlayerImpl implements ExamOp
 		{
 			return array[99][0];
 		}
-		for(k =1; k<100;k++) {
+		for(k =1; k<200;k++) {
 			if(array[k][1]== 999 && array[k][0]== 999) {
 				return k;
 			}
 		}
-		return 100;
+		return 200;
 	}
 
 
@@ -287,8 +287,8 @@ public class DragonSlayerImpl implements ExamOp
 			vis[i] = false;
 		}
 
-		int[][] path_seq = new int[100][2];   
-		for(int i= 0; i< 100 ; i++)
+		int[][] path_seq = new int[200][2];
+		for(int i= 0; i< 200 ; i++)
 		{
 			path_seq[i][0]=999;
 			path_seq[i][1]=999;
@@ -552,7 +552,7 @@ public class DragonSlayerImpl implements ExamOp
 		int x_next=0;
 		int y_next=0;
 		int i=0;		
-		for(i =0; i<100;i++) {//get the original hero_x_y
+		for(i =0; i<200;i++) {//get the original hero_x_y
 			if(path_sequence_with_time[i][2]==sys_time) {
 				x_before=path_sequence_with_time[i][0];
 				y_before=path_sequence_with_time[i][1];
@@ -650,7 +650,7 @@ public class DragonSlayerImpl implements ExamOp
 	    else
 	    {
 			hero.setStatus(Status.MARCHING);
-			for(int i =0;i<100;i++){
+			for(int i =0;i<200;i++){
 				if(path_sequence[i][1]!=999) {
 					path_sequence_with_time[i][0] = path_sequence[i][0];
 					path_sequence_with_time[i][1] = path_sequence[i][1];
