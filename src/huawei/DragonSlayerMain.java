@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Label;
+import java.io.*;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -22,8 +23,7 @@ import com.huawei.exam.ExamSocketServer;
  */
 public class DragonSlayerMain
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         /**
          * 启动Socket服务侦听5555端口，从Socket获取命令，会丢给Command类的command函数执行
          * Command类的command函数已经实现了从Socket接收到字符串后的解析与分发 考生只需要实现DragonSlayerImpl类的各命令接口即可。
@@ -32,12 +32,14 @@ public class DragonSlayerMain
         Command cmd = new ExamCmd(new DragonSlayerImpl());
         ExamSocketServer ess = new ExamSocketServer(cmd);
         ess.start();*/
+        File file = new File("D:\\work\\Github\\TetrisMania\\testcase.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file));
     	JFrame jframe=new JFrame();
     	Scanner scanner=new Scanner(System.in);
     	DragonSlayerImpl test_map=new DragonSlayerImpl();
     	String order="start";
-    	while(order.matches("ends")==false){
-    		order=scanner.nextLine();
+    	while(order!=null){
+    		order=br.readLine();
     		String[] parts=order.split(" ");   		
     		if(parts[0].matches("sf")){
     			int x,y,t;
