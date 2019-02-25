@@ -411,9 +411,14 @@ public class DragonSlayerImpl implements ExamOp
 
 	public static void dfs(int s, int t, Ans A,  int start)
 	{
+		if(paths.size()>=2){
+			return ;
+		}
 		if (s == t)
 		{
+
 			System.out.println("Find Optimistic path");
+
 			A.start = start;
 			A.getCost(Gmat);
 			Ans A2 = new Ans();
@@ -424,6 +429,7 @@ public class DragonSlayerImpl implements ExamOp
 			}
 			A2.getCost(Gmat);
 			paths.add(A2);
+
 		}
 
 		for (int i = 0; i < G4[s].size(); i++)

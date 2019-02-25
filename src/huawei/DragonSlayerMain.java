@@ -63,15 +63,16 @@ public class DragonSlayerMain
     			int t;
     			t=Integer.valueOf(parts[1]);
     			test_map.query(t);
-    		}else if(parts[0].matches("r")){
-    			test_map.reset();
-    		}
-    		
-    		jframe.setVisible (false);
-    		jframe=drawMap(test_map.map);
-    		jframe.setVisible (true);
+    		}else if(parts[0].matches("r")) {
+				test_map.reset();
+			}
     	}
-    	
+		jframe.setVisible (false);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe=drawMap(test_map.map);
+		jframe.setVisible (true);
+
+		scanner.close();
     }
     
     public static JFrame drawMap(Map map){

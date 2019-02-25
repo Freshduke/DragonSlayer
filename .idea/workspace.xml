@@ -8,9 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/testcase/DragonSlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/testcase/DragonSlayerTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,11 +45,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="740" column="42" lean-forward="true" selection-start-line="740" selection-start-column="42" selection-end-line="740" selection-end-column="42" />
+            <state relative-caret-position="1140">
+              <caret line="258" column="21" selection-start-line="258" selection-start-column="21" selection-end-line="258" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,11 +57,38 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/testcase/DragonSlayerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/SocketApi.jar!/com/huawei/exam/ExamSocketServer.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huawei/Ans.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="399">
+              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -105,12 +134,12 @@
       <find>999</find>
       <find>isTurnadoSet</find>
       <find>rese</find>
-      <find>dfs</find>
       <find>temp_map</find>
       <find>dijkst</find>
       <find>findpath</find>
       <find>update</find>
       <find>query</find>
+      <find>dfs</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -125,11 +154,12 @@
         <option value="$PROJECT_DIR$/src/huawei/Edge.java" />
         <option value="$PROJECT_DIR$/src/huawei/PriorityQueue.java" />
         <option value="$PROJECT_DIR$/src/huawei/Map.java" />
-        <option value="$PROJECT_DIR$/src/huawei/DragonSlayerMain.java" />
         <option value="$PROJECT_DIR$/src/huawei/P.java" />
         <option value="$PROJECT_DIR$/src/huawei/Ans.java" />
         <option value="$PROJECT_DIR$/src/huawei/MyElement.java" />
         <option value="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" />
+        <option value="$PROJECT_DIR$/src/testcase/DragonSlayerTest.java" />
+        <option value="$PROJECT_DIR$/src/huawei/DragonSlayerMain.java" />
       </list>
     </option>
   </component>
@@ -140,8 +170,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
+    <option name="x" value="794" />
+    <option name="width" value="1133" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
@@ -164,6 +194,29 @@
             <path>
               <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
               <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
+              <item name=".settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="SocketApi.jar" type="ab9368bb:PsiFileNode" />
+            </path>
+            <path>
+              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="SocketApi.jar" type="ab9368bb:PsiFileNode" />
+              <item name="exam" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -171,6 +224,12 @@
               <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="huawei" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DragonSlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DragonSlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="testcase" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -187,7 +246,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550665055043" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551101879852" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -258,6 +317,7 @@
       <workItem from="1550672072676" duration="2615000" />
       <workItem from="1550843119845" duration="2851000" />
       <workItem from="1551092433688" duration="1567000" />
+      <workItem from="1551095265934" duration="7052000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -420,11 +480,25 @@
       <option name="project" value="LOCAL" />
       <updated>1551094304150</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="修正100为200">
+      <created>1551095280951</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1551095280951</updated>
+    </task>
+    <task id="LOCAL-00025" summary="更新修正英雄屠龙后的状态">
+      <created>1551095607824</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1551095607824</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47706000" />
+    <option name="totallyTimeSpent" value="54758000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -436,10 +510,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
-    <editor active="true" />
+    <frame x="794" y="0" width="1133" height="1047" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" weight="0.27242887" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" visible="true" weight="0.2609506" />
       <window_info id="Structure" order="1" sideWeight="0.50448835" side_tool="true" weight="0.12846482" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -448,7 +521,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5065076" side_tool="true" weight="0.12686567" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.68017524" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.50273824" />
       <window_info anchor="bottom" x="8" y="580" width="775" height="485" id="Debug" order="3" type="WINDOWED" weight="0.39978093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -496,7 +569,9 @@
     <MESSAGE value="修正英雄屠龙之后仍然能够设置元素，让我们站在思铭和向萌的肩上，一刀999！" />
     <MESSAGE value="修正英雄屠龙之后仍然能够设置元素，还剩两个bug没有de" />
     <MESSAGE value="origin" />
-    <option name="LAST_COMMIT_MESSAGE" value="origin" />
+    <MESSAGE value="修正100为200" />
+    <MESSAGE value="更新修正英雄屠龙后的状态" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新修正英雄屠龙后的状态" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -561,34 +636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/huawei/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="740" column="42" lean-forward="true" selection-start-line="740" selection-start-column="42" selection-end-line="740" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/Ans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -603,6 +654,58 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="14" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/Ans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="833" selection-start-line="833" selection-end-line="833" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.desktop/sun/awt/windows/WToolkit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="302" column="76" lean-forward="true" selection-start-line="302" selection-start-column="76" selection-end-line="302" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="258" column="21" selection-start-line="258" selection-start-column="21" selection-end-line="258" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/testcase/DragonSlayerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/SocketApi.jar!/com/huawei/exam/ExamSocketServer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="61" column="20" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
         </state>
       </provider>
     </entry>
