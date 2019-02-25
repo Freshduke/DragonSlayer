@@ -729,9 +729,10 @@ public class DragonSlayerImpl implements ExamOp
     {    	
     	if(sys_time<=time)
     	{
+			if(this.hero.getTitle()==Title.WARRIOR){
     		if(sys_time<time){
     			update(time);
-    		}
+    		}}
     		int x=area.getX();
         	int y=area.getY();
         	char flag=isCollision(x,y);
@@ -769,9 +770,10 @@ public class DragonSlayerImpl implements ExamOp
     {	
     	if(sys_time<=time)
     	{
+			if(this.hero.getTitle()==Title.WARRIOR){
     		if(sys_time<time){
     			update(time);
-    		}
+    		}}
     		int x=area.getX();
         	int y=area.getY();
         	char flag=isCollision(x,y);
@@ -816,9 +818,11 @@ public class DragonSlayerImpl implements ExamOp
     {
     	if(sys_time<=time)
     	{
+			if(this.hero.getTitle()==Title.WARRIOR){
     		if(sys_time<time){
     			update(time);
-    		}
+    		}}
+
         	int entry_x=entry.getX();
         	int entry_y=entry.getY();
         	int exit_x=exit.getX();
@@ -863,9 +867,11 @@ public class DragonSlayerImpl implements ExamOp
     {
         if(time>=this.sys_time)
     	{
-    		if(time>this.sys_time){
-        		update(time);
-        	}
+    		if(this.hero.getTitle()==Title.WARRIOR){
+				if(time>this.sys_time){
+					update(time);
+				}
+    		}
 			System.out.println(this.hero.getTitle()+" "+this.hero.getStatus()+" at("+this.hero.getArea().getX()+","+this.hero.getArea().getY()+")");
     		return new OpResult(this.hero);
     	}else{
