@@ -3,7 +3,7 @@ package huawei;
 import java.util.*;
 
 public class Ans{
-    ArrayList<Integer> path = new ArrayList<>();
+    ArrayList<Integer> path = new ArrayList<Integer>();
     int cost;
     int start;
 
