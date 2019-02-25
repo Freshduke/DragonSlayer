@@ -9,7 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dad8849b-6668-4620-ab56-800c38a939ff" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/DragonSlayer/huawei/DragonSlayerImpl.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13413">
-              <caret line="179" column="38" lean-forward="true" selection-start-line="179" selection-start-column="38" selection-end-line="179" selection-end-column="38" />
+            <state relative-caret-position="247">
+              <caret line="191" column="34" lean-forward="true" selection-start-line="191" selection-start-column="34" selection-end-line="191" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -138,7 +139,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="671" />
     <option name="y" value="3" />
     <option name="width" value="1257" />
@@ -149,8 +150,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,6 +177,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -256,7 +257,8 @@
       <workItem from="1550662312554" duration="2690000" />
       <workItem from="1550666831680" duration="3025000" />
       <workItem from="1550672072676" duration="2615000" />
-      <workItem from="1550843119845" duration="2653000" />
+      <workItem from="1550843119845" duration="2851000" />
+      <workItem from="1551092433688" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="tem">
       <created>1549963438238</created>
@@ -405,11 +407,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550844746435</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="修正英雄屠龙之后仍然能够设置元素，还剩两个bug没有de">
+      <created>1550845888338</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1550845888338</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45941000" />
+    <option name="totallyTimeSpent" value="46736000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -422,8 +431,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="671" y="3" width="1257" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" visible="true" weight="0.20467836" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49551168" visible="true" weight="0.20802005" />
       <window_info id="Structure" order="1" sideWeight="0.50448835" side_tool="true" weight="0.12846482" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -432,7 +442,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5065076" side_tool="true" weight="0.12686567" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.68017524" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.68017524" />
       <window_info anchor="bottom" x="8" y="580" width="775" height="485" id="Debug" order="3" type="WINDOWED" weight="0.39978093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -478,7 +488,8 @@
     <MESSAGE value="修正reset问题" />
     <MESSAGE value="success！" />
     <MESSAGE value="修正英雄屠龙之后仍然能够设置元素，让我们站在思铭和向萌的肩上，一刀999！" />
-    <option name="LAST_COMMIT_MESSAGE" value="修正英雄屠龙之后仍然能够设置元素，让我们站在思铭和向萌的肩上，一刀999！" />
+    <MESSAGE value="修正英雄屠龙之后仍然能够设置元素，还剩两个bug没有de" />
+    <option name="LAST_COMMIT_MESSAGE" value="修正英雄屠龙之后仍然能够设置元素，还剩两个bug没有de" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -557,6 +568,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="191" column="34" lean-forward="true" selection-start-line="191" selection-start-column="34" selection-end-line="191" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huawei/Ans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/DragonSlayerExamApi.jar!/huawei/exam/Hero.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -568,23 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="14" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/Ans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/huawei/DragonSlayerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13413">
-          <caret line="179" column="38" lean-forward="true" selection-start-line="179" selection-start-column="38" selection-end-line="179" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
